@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Trang Chu</title>
+        <meta name="author" content="Riccardo Massera"></meta>
+    </h:head>
+    <h:body style="padding: 60px; min-height: 2000px;">
+        <b:navBar brand="Project name" brandHref="#" fixed="top" inverse="true" >
+            <b:navbarLinks>
+                <b:navLink value="Home" href="#"></b:navLink>
+                <b:navLink value="About" href="#about"></b:navLink>
+                <b:navLink value="Contact" href="#contact"></b:navLink>
+                <b:dropMenu value="Dropdown">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <b:navbarLinks pull="right">
+                <b:navLink rendered="#{productJSFManagedBean.productOrder.size() != 0}" active="true" value="Check Out" outcome="listorder?faces-redirect=true">
+                    <h:graphicImage value="resources/Images/basket-icon.png" />
+                </b:navLink>
+                <h:form  rendered="#{loginJSFManagedBean.customer == null}" styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText value="#{loginJSFManagedBean.username}" placeholder="Email" fieldSize="sm"/>
+                </div>
+                <div class="form-group">
+                    <b:inputText type="password"  value="#{loginJSFManagedBean.password}" placeholder="Password" fieldSize="sm"/>
+                </div> 
+
+                <b:commandButton  action="#{loginJSFManagedBean.checkLoginManager()}"  value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+               
+            </h:form>
+                 <b:label rendered="#{loginJSFManagedBean.username != null}" text="Well come #{loginJSFManagedBean.customer.customerName}" severity="info"/>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <h1>List Product</h1>
+            <b:jumbotron>
+                <h5>Please chose optional Product</h5>
+                <b:dropButton look="warning" value="   Choose Category   ">
+                    <b:navLink value="Phones" onclick=""></b:navLink>
+                    <b:navLink value="Lap Top" href="#"></b:navLink>
+                    <b:navLink value="Camera" href="#"></b:navLink>
+                </b:dropButton>
+            </b:jumbotron>
+            <h:form>
+                <c:forEach items="#{productJSFManagedBean.listProducs}" var="item">
+
+                    <b:column col-xs="6" col-sm="3" styleClass="placeholder">  
+                        <b:panel title="#{item.productName}" look="info" style="display:block; text-align:center" >                      
+                            <h:graphicImage value="resources/Images/testImage.gif" alt="Generic placeholder thumbnail" />
+                            <h4>#{item.productName}</h4>
+                            <b:label text="#{item.productPrice} VND" severity="danger"/>  <br></br>
+
+                            <b:commandButton size="xs" look="success" value="Add to Cart" action="#{productJSFManagedBean.createOderDetail(item)}" >
+                                <b:alert rendered="#{productJSFManagedBean.sp == null}" severity="success" closable="true"><strong>Well done!</strong> You successfully add new product.</b:alert>
+                            </b:commandButton>
+                        </b:panel>          
+                    </b:column>
+                </c:forEach>        
+            </h:form>
+        </b:container>
+    </h:body>
+</html>

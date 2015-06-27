@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Project Name</title>
+        <meta name="author" content="The Author"></meta>
+    </h:head>
+    <h:body style="padding: 60px;">
+        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Dash Board" href="dashboard.xhtml"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <b:jumbotron>
+                <h4>Update new Product</h4>
+                 Recommend type input correctly
+                 <h:form enctype="multipart/form-data" >   
+                     Ten San Pham: <b:inputText value="#{productJSFManagedBean.sp.productName}"></b:inputText>      
+                     Gia San Pham: <b:inputText value="#{productJSFManagedBean.sp.productPrice}"></b:inputText>
+                     So Luong: <b:inputText value="#{productJSFManagedBean.sp.productQuantity}"></b:inputText>
+                     Thong Tin: <b:inputText value="#{productJSFManagedBean.sp.productDescription}"></b:inputText>        
+                     Tinh Trang: <b:inputText value="#{productJSFManagedBean.sp.productStatus}"></b:inputText>                 
+                     <b:commandButton look="primary" value="Save" action="#{productJSFManagedBean.addProduct()}" ></b:commandButton>
+                 </h:form>
+            </b:jumbotron>     
+        </b:container>   
+    </h:body>
+</html>

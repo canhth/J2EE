@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Sales and Distribution</title>
+        <meta name="author" content="The Author"></meta>
+    </h:head>
+    <h:body style="padding: 60px;">
+        <b:navBar brand="Sales and Distribution" brandHref="#" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Home" href="#"></b:navLink>
+                <b:navLink value="About" href="#about"></b:navLink>
+                <b:navLink value="Contact" href="#contact"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <h2><b:alert severity="success" closable="true"><strong>Well done!</strong> Your order is being considered.</b:alert></h2>
+            <h4>#{' We just send to you email about infomation of your Order. Please check content and contact us if you have any question. '}</h4>
+        </b:container>
+        <h:form>
+        <b:commandButton tooltip-position="auto right" size="lg" value="Back Home"  action="#{productJSFManagedBean.backIndex()}" look="primary"/>#{' Click here back to index. '}
+        </h:form>
+    </h:body>
+</html>

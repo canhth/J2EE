@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>BootsFaces: next-gen JSF Framework</title>
+        <meta name="author" content="Riccardo Massera"></meta>
+    </h:head>
+    <h:body style="padding: 60px; min-height: 2000px;">
+        <b:navBar brand="Project name" brandHref="#" fixed="top" inverse="true" >
+            <b:navbarLinks>
+                <b:navLink value="Home" href="#"></b:navLink>
+                <b:navLink value="About" href="#about"></b:navLink>
+                <b:dropMenu value="Dropdown">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <b:navbarLinks pull="right">
+                <b:navLink  value="Manager Something" outcome="">
+                </b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <h1>List Product</h1>
+           
+               <h:form>
+                <b:label text="List Order:" />
+
+                <h:dataTable styleClass="table table-bordered" rendered="#{productJSFManagedBean.productOrder.size() != 0}" var="item" value="#{productJSFManagedBean.productOrder}" border="1">
+
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{item.productID}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Name" /></f:facet>
+                        <h:outputText value="#{item.productName}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Description" /></f:facet>
+                        <h:outputText value="#{item.productDescription}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Price" /></f:facet>
+                        <h:outputText value="#{item.productPrice}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Qyantity" /></f:facet>
+                        <h:outputText value="#{item.productQuantity}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{item.productStatus}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name ="header">Tuy chon</f:facet>                      
+                        <h:commandLink value="Xoa" action="#{productJSFManagedBean.clear(item)}" ></h:commandLink>                            
+                    </h:column>
+                </h:dataTable>
+                <br></br>
+
+                <b:commandButton size="lg" look="success" value="Check Out" action="#{orderJSFManagedBean.importOrder(productJSFManagedBean.listProducs)}"></b:commandButton>
+
+            </h:form>
+            
+            
+        </b:container>
+
+
+    </h:body>
+</html>
+

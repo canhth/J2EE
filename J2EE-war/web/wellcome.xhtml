@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>J2EE Sale and Distribution</title>
+        <h:outputStylesheet library="css" name="StyleSheet.css" />
+    </h:head>
+    <h:body >
+
+        <h:form id="form1">
+            <div id="wrapper">
+                <div id="banner">
+                    
+                </div>
+                <div id="navigation">
+                   
+                </div>
+                <div id="content_area">
+                    <h:form>
+            <h:dataTable var="product" value="#{productJSFManagedBean.danhsach()}" border="1">
+                <h:column>
+                    <f:facet name ="header">Ma San Pham:</f:facet>
+                        #{product.productID}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">Ten San Pham:</f:facet>
+                        #{product.productName}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">Mo Ta San Pham:</f:facet>
+                        #{product.productDescription}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">So Luong:</f:facet>
+                        #{product.productQuantity}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">Tinh Trang:</f:facet>
+                        #{product.productStatus}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">Gia:</f:facet>
+                        #{product.productPrice}
+                </h:column>
+                <h:column>
+                    <f:facet name ="header">Hinh Anh:</f:facet>
+                        #{product.image}
+                </h:column>              
+                <h:column>
+                    <f:facet name ="header">Tuy chon</f:facet>
+                    <h:commandLink value="Them Gio Hang" action="#{productJSFManagedBean.DeleteProduct(product)}"></h:commandLink>                  
+                </h:column>
+            </h:dataTable>
+        </h:form>
+                </div>
+                <div id="sidebar">
+                    
+                </div>
+                <div id="footer">
+                    <p>Ban Hang </p>
+                </div>
+            </div>
+        </h:form>  
+        
+    </h:body>
+
+</html>
+
+

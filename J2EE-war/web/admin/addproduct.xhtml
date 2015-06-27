@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Project Name</title>
+        <meta name="author"  http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+    </h:head>
+    <h:body style="padding: 60px;">
+        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Dash Board" href="dashboard.xhtml"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <b:jumbotron>
+                <h4>Add new Product</h4>
+                <b:label text="Recommend type input correctly" /> 
+                <h:form enctype="multipart/form-data;charset=UTF-8"  >   
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Ten San Pham:" />
+                        <b:inputText span="8" value="#{productJSFManagedBean.sp.productName}"  />
+                        <h:outputLabel value="Gia San Pham:" />
+                        <b:inputText span="5" value="#{productJSFManagedBean.sp.productPrice}" />
+                        <h:outputLabel value="So Luong:" />
+                        <b:inputText span="5" value="#{productJSFManagedBean.sp.productQuantity}"/>
+                        <h:outputLabel value="Thong Tin:" />
+                        <b:inputText span="8" value="#{productJSFManagedBean.sp.productDescription}" />
+                        <h:outputLabel value="Tinh Trang:" />
+                        <b:inputText span="5" value="#{productJSFManagedBean.sp.productStatus}"/>
+                    </b:panelGrid>                 
+                    <b:commandButton look="primary" value="Save" action="#{productJSFManagedBean.addProduct()}" >
+                        <b:alert rendered="#{productJSFManagedBean.isAddNewProductSucsses == true}" severity="success" closable="true"><strong>Well done!</strong> You successfully add new product.</b:alert>
+                    </b:commandButton>
+                </h:form>
+
+            </b:jumbotron>     
+        </b:container>   
+    </h:body>
+</html>
