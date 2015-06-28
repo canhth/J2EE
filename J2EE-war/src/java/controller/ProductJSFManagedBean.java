@@ -21,13 +21,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.Part;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 /**
  *
  * @author Royal
  */
 @ManagedBean
 @SessionScoped
-public class ProductJSFManagedBean {
+public class ProductJSFManagedBean implements Serializable{
     @EJB
     private CategoryFacade categoryFacade;
     @EJB
@@ -84,8 +85,7 @@ public class ProductJSFManagedBean {
     }
     
     public String addProduct()
-    {  
-        
+    {         
         this.productFacade.create(this.sp);
         isAddNewProductSucsses = true;
         return "addproduct";
@@ -100,15 +100,21 @@ public class ProductJSFManagedBean {
     public String update()
     {
         this.productFacade.edit(this.sp);
-        return "index?faces-redirect=true";
+        return "dashboard?faces-redirect=true";
     }  
     
     /* Add product to Order */
     
-    public void createOderDetail(Product product)
+    public String createOderDetail(Product product)
     {
-        this.sp = product;
-        this.productOrder.add(product);
+        if(LoginJSFManagedBean.customer != null)
+        {
+           this.sp = product;
+           this.productOrder.add(product);
+           return "index";
+        }
+        else 
+            return "login?faces-redirect=true";
     }
     
     public void clear(Product product)
@@ -123,6 +129,12 @@ public class ProductJSFManagedBean {
         return "listorder?faces-redirect=true";
     }
     
+    public String countCharge(int charge)
+    {      
+        double price = (double)charge;
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return formatter.format(price) + " VNĐ";       
+    }
     
     @PostConstruct
     public void init()
@@ -130,13 +142,16 @@ public class ProductJSFManagedBean {
         listCategory = categoryFacade.findAll();
         listProducs = productFacade.findAll();
     } 
-    
-    
+       
     public String backIndex()
     {
-        this.productOrder.clear();
-        
+        this.productOrder.clear();      
         return "index?faces-redirect=true";
+    }
+    
+    public String findProductNameByID(int productID)
+    {
+        return this.productFacade.find(productID).getProductName();
     }
     
 }

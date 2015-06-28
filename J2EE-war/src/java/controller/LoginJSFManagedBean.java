@@ -6,24 +6,27 @@
 
 package controller;
 
-import dao.*;
-import entity.*;
-import java.util.*;
+import dao.CustomerFacade;
+import dao.ManagerFacade;
+import entity.Customer;
+import entity.Manager;
+import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 
 /**
  *
  * @author Royal
  */
 @ManagedBean
-@ApplicationScoped
-public class LoginJSFManagedBean {
-    @EJB
+@SessionScoped
+public class LoginJSFManagedBean implements Serializable {
+
+     @EJB
     private CustomerFacade customerFacade;
     
     @EJB

@@ -8,89 +8,117 @@ package controller;
 
 import dao.*;
 import entity.*;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 /**
  *
  * @author Royal
  */
 @ManagedBean
-@SessionScoped
-public class OrderJSFManagedBean {
+@RequestScoped
+public class OrderJSFManagedBean implements Serializable{
     @EJB
     private CustomerOrderFacade customerOrderFacade;
     @EJB
     private CustomerOrderDetailFacade customerOrderDetailFacade;
     
-    public CustomerOrder customOder = new CustomerOrder();
-   
-    public int cusOrderID;
-    public int cusOrderDetailID;
+    public List<CustomerOrder> customerOrder = new ArrayList<CustomerOrder>();
+
+    private Integer paymentID;
+
+    private boolean isUpdateOrder;
+
+    public boolean isIsUpdateOrder() {
+        return isUpdateOrder;
+    }
+
+    public void setIsUpdateOrder(boolean isUpdateOrder) {
+        this.isUpdateOrder = isUpdateOrder;
+    }
+    
+    public Integer getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(Integer paymentID) {
+        this.paymentID = paymentID;
+    }
+    
+    public List<CustomerOrder> getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public void setCustomerOrder(List<CustomerOrder> customerOrder) {
+        this.customerOrder = customerOrder;
+    }
+    
+     
+    public static CustomerOrder objectCustomerOrder = new CustomerOrder();
+
+    
+    public CustomerOrder getObjectCustomerOrder() {
+        return objectCustomerOrder;
+    }
+
+    public void setObjectCustomerOrder(CustomerOrder objectCustomerOrder) {
+        this.objectCustomerOrder = objectCustomerOrder;
+    }
+
     
     public OrderJSFManagedBean() {
     }
      
     public String importOrder(List<Product> productList)
     {
-        List<CustomerOrder> listOder = this.customerOrderFacade.findAll();
-        if(listOder.size() > 0)
-        {
-             this.customOder = listOder.get(listOder.size() - 1); 
-             this.cusOrderID = this.customOder.getCustomerOrderID() + 1;
-        } 
-        else {
-            this.cusOrderID = 1;
-        } 
-                    
-        
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");     
         Calendar cal = Calendar.getInstance();       
         CustomerOrder newCustomerOrder = new CustomerOrder();
-        newCustomerOrder.setCustomerOrderID(this.cusOrderID);
         newCustomerOrder.setCustomerID(LoginJSFManagedBean.customer.getCustomerID());
         newCustomerOrder.setCustomerOrderDate(dateFormat.format(cal.getTime()));
         newCustomerOrder.setCustomerOrderName("Mua Hang");
         newCustomerOrder.setCustomerOrderState("Cho Duyet Don Hang");
-        newCustomerOrder.setCustomerOrderPaymentID(1);
+        newCustomerOrder.setCustomerOrderPaymentID(this.paymentID);
         this.customerOrderFacade.create(newCustomerOrder);
-        
-        List<CustomerOrderDetail> listOderDetails = this.customerOrderDetailFacade.findAll();
-        if(listOderDetails.size() > 0)
-        {            
-             this.cusOrderDetailID = listOderDetails.get(listOder.size() - 1).getDetailID() + 1; 
-        } 
-        else {
-            this.cusOrderDetailID = 1;
-        }
+                 
         for (Product product : productList)
         {
             CustomerOrderDetail orderDetails = new CustomerOrderDetail();
-            orderDetails.setDetailID(this.cusOrderDetailID);
-            orderDetails.setCustomerOrderID(this.cusOrderID);
+            orderDetails.setCustomerOrderID(newCustomerOrder.getCustomerOrderID());
             orderDetails.setProductID(product.getProductID());
-            orderDetails.setQuantity(product.getProductQuantity());
+            orderDetails.setQuantity(1);
             orderDetails.setPrice(product.getProductPrice());
             customerOrderDetailFacade.create(orderDetails);
-            this.cusOrderDetailID += 1;
         }
-        this.customOder = null;
         return "checkout";
     }
-    
-    public double countCharge(List<Product> productList)
-    {
-        double charge = 0;
-        for (Product product : productList)
-        {
-            charge += product.getProductPrice();
-        }
-        return charge;
+
+
+    /*      Managed Dashboard */
+    public List<CustomerOrder> findAllOrder() {
+
+        return this.customerOrderFacade.findAll();
+    }
+
+    public String checkOutOrder(CustomerOrder order) {
+        OrderJSFManagedBean.objectCustomerOrder = order;
+        return "updateorder?redirect=true";
+    }
+
+    public String updateOrder()
+    {  
+        this.customerOrderFacade.edit(this.objectCustomerOrder);
+        this.isUpdateOrder = true;
+        return "managedOrder?faces-redirect=true";
     }
     
-    
-    
+    @PostConstruct
+    public void init() {
+        this.customerOrder = customerOrderFacade.findAll();
+    }
 }

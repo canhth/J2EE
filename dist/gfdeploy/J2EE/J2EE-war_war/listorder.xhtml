@@ -12,7 +12,7 @@
         <meta name="author" content="Riccardo Massera"></meta>
     </h:head>
     <h:body style="padding: 60px; min-height: 2000px;">
-        <b:navBar brand="Project name" brandHref="#" fixed="top" inverse="true" >
+        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true" >
             <b:navbarLinks>
                 <b:navLink value="Home" href="#"></b:navLink>
                 <b:navLink value="About" href="#about"></b:navLink>
@@ -64,9 +64,15 @@
                     </h:column>
                 </h:dataTable>
                 <br></br>
-
-                <b:commandButton size="lg" look="success" value="Check Out" action="#{orderJSFManagedBean.importOrder(productJSFManagedBean.listProducs)}"></b:commandButton>
-
+                
+                <b:selectOneMenu span="5" value="#{orderJSFManagedBean.paymentID}">
+                    <f:selectItem itemValue="1" itemLabel="Thanh toan khi nhan hang." />
+                    <f:selectItem itemValue="2" itemLabel="Giao dich tai cua hang." />
+                    <f:selectItem itemValue="3" itemLabel="Chuyen khoan roi giao hang." />
+                </b:selectOneMenu>
+                <br></br><br></br><br></br>
+                <b:commandButton size="lg" look="success" value="Check Out" action="#{orderJSFManagedBean.importOrder(productJSFManagedBean.productOrder)}"></b:commandButton>
+                
             </h:form>
             
             

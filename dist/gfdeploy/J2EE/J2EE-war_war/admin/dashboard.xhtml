@@ -51,7 +51,7 @@
             }
             @media (min-width: 768px) {
                 .main {
-                    padding-left: 40px;
+                    padding-left: 20px;
                     padding-right: 40px;
                 }
             }
@@ -75,7 +75,7 @@
         </style>
     </h:head>
     <h:body style="padding-top: 60px">
-        <h:outputScript library="holder" name="holder.js" />
+
 
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
@@ -93,27 +93,25 @@
 
         <b:container  fluid="true">
             <b:row>
-                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink header="Dasboard Links" />
-                        <b:navLink href="#" value="Manager Products" active="true"/>
-                        <b:navLink href="#" value="Manager Category" />
+                        <b:navLink href="dashboard.xhtml" value="Manager Products" active="true"/>
+                        <b:navLink href="managercategory.xhtml" value="Manager Category" />
                     </b:listLinks>
                     <b:listLinks >
-                        <b:navLink value="Manager Order" />
+                        <b:navLink value="Manager Order" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Bill" />
                         <b:navLink value="Manager User" />        
                     </b:listLinks>             
                 </b:column>
-                <b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
+                <b:column col-md="9" offset="1" styleClass="main" >
                     <h1>Manager Product</h1>
-
-                    <b:button value="New Product" outcome="addproduct" size="lg" look="primary"/>#{' '}
-                    <hr/>
-                    <b:row styleClass="table-responsive">  
-
-                        <h:form>
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.listProducs}" var="item">
+                    <h:form>
+                        <b:button value="New Product" outcome="addproduct" size="lg" look="primary"/>#{' '}
+                        <hr/>
+                        <b:row styleClass="table-responsive">                         
+                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.danhsach()}" var="item">
                                 <h:column>
                                     <f:facet name="header"><h:outputText value="#" /></f:facet>
                                     <h:outputText value="#{item.productID}" />
@@ -140,13 +138,12 @@
                                 </h:column>
                                 <h:column>
                                     <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton look="warning" value="Cap Nhat" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> ||
-                                    <b:commandButton look="warning" value="Xoa" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="Are you sure?" ></b:commandButton>                            
+                                    <b:commandButton look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
+                                    <b:commandButton look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
-                            </h:dataTable>
-                        </h:form>
-                    </b:row>
-
+                            </h:dataTable>                      
+                        </b:row>
+                    </h:form>
                 </b:column>
             </b:row>       
         </b:container>                

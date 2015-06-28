@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Project Name</title>
+        <meta name="author"  http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+    </h:head>
+    <h:body style="padding: 60px;">
+        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Dash Board" href="dashboard.xhtml"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:container>
+            <b:jumbotron>
+                <h2>Managed Order.</h2>
+                <b:label severity="danger" text="Recommend type input correctly" />
+                <h5></h5>
+                <h:form enctype="multipart/form-data;charset=UTF-8">   
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="ID:" />
+                        <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderID}"  />       
+                        <h:outputLabel value="Date:" />
+                        <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderDate}"  />                                 
+                        <h:outputLabel value="Description:" />
+                        <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderName}" />
+                        <h:outputLabel value="Customer Name:" />
+                        <b:inputText span="5" readonly="true" value="#{customerJSFManagedBean.findCustomerName(orderJSFManagedBean.objectCustomerOrder)}"/>
+                         <h:outputLabel value="Payment:" />
+                        <b:inputText span="5" readonly="true" value="#{paymentJSFManagedBean.findPaymentName(orderJSFManagedBean.objectCustomerOrder)}"/>
+                        <h:outputLabel value="Trang Thai:" />
+                        <b:selectOneMenu span="5" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderState}">
+                            <f:selectItem itemValue="Dang Giao Hang" itemLabel="Bat Dau Giao Hang" />
+                            <f:selectItem itemValue="Hoan Tat" itemLabel="Da Thanh Toan Khi Nhan Hang" />
+                            <f:selectItem itemValue="Huy Bo" itemLabel="Huy Bo Don Hang" />
+                        </b:selectOneMenu>
+                    </b:panelGrid>                 
+                    <b:commandButton look="primary" value="Save Order" action="#{orderJSFManagedBean.updateOrder()}">
+                        <b:alert rendered="#{orderJSFManagedBean.isUpdateOrder == true}" severity="success" closable="true"><strong>Well done!</strong> You successfully update Order.</b:alert>
+                    </b:commandButton>
+                </h:form>               
+            </b:jumbotron>     
+            <h3><b:label severity="info" text="Information of Order." /> </h3>
+            <h:dataTable  styleClass="table table-condensed" var="item" value="#{orderDetailJSFManagedBean.getAllOrderDetail()}" border="1">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="#{item.customerOrderID}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Product" /></f:facet>
+                        <h:outputText value="#{productJSFManagedBean.findProductNameByID(item.productID)}" />                       
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Price" /></f:facet>
+                        <h:outputText value="#{item.price}" ><f:convertNumber pattern="###,###,###,###" /></h:outputText>                       
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Quantity" /></f:facet>
+                        <h:outputText value="#{item.quantity}" />
+                    </h:column>
+            </h:dataTable>
+            <h2>Tổng tiền:  <b:label text="#{orderDetailJSFManagedBean.countCharge(orderDetailJSFManagedBean.listOrderDetail)}"></b:label> VNĐ</h2>
+           
+        </b:container>   
+    </h:body>
+</html>

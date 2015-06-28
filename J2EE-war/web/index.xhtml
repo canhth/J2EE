@@ -12,11 +12,11 @@
         <meta name="author" content="Riccardo Massera"></meta>
     </h:head>
     <h:body style="padding: 60px; min-height: 2000px;">
-        <b:navBar brand="Project name" brandHref="#" fixed="top" inverse="true" >
+        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true" >
             <b:navbarLinks>
-                <b:navLink value="Home" href="#"></b:navLink>
-                <b:navLink value="About" href="#about"></b:navLink>
-                <b:navLink value="Contact" href="#contact"></b:navLink>
+                <b:navLink value="Home" href="#" active="true"></b:navLink>
+                <b:navLink value="About" href="faces/about.xhtml"></b:navLink>
+                <b:navLink value="Contact" href="faces/admin/managedOrder.xhtml"></b:navLink>
                 <b:dropMenu value="Dropdown">
                     <b:navLink value="Action" href="#"></b:navLink>
                     <b:navLink value="Another action" href="#"></b:navLink>
@@ -32,17 +32,15 @@
                     <h:graphicImage value="resources/Images/basket-icon.png" />
                 </b:navLink>
                 <h:form  rendered="#{loginJSFManagedBean.customer == null}" styleClass="navbar-form navbar-right">
-                <div class="form-group">
-                    <b:inputText value="#{loginJSFManagedBean.username}" placeholder="Email" fieldSize="sm"/>
-                </div>
-                <div class="form-group">
-                    <b:inputText type="password"  value="#{loginJSFManagedBean.password}" placeholder="Password" fieldSize="sm"/>
-                </div> 
-
-                <b:commandButton  action="#{loginJSFManagedBean.checkLoginManager()}"  value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
-               
-            </h:form>
-                 <b:label rendered="#{loginJSFManagedBean.username != null}" text="Well come #{loginJSFManagedBean.customer.customerName}" severity="info"/>
+                    <div class="form-group">
+                        <b:inputText value="#{loginJSFManagedBean.username}" placeholder="Email" fieldSize="sm"/>
+                    </div>
+                    <div class="form-group">
+                        <b:inputText type="password"  value="#{loginJSFManagedBean.password}" placeholder="Password" fieldSize="sm"/>
+                    </div>
+                    <b:commandButton  action="#{loginJSFManagedBean.checkLoginManager()}"  value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+                </h:form>
+                <b:label rendered="#{loginJSFManagedBean.username != null}" text="Well come #{loginJSFManagedBean.customer.customerName}" severity="info"/>
             </b:navbarLinks>
         </b:navBar>
         <b:container>
@@ -62,7 +60,7 @@
                         <b:panel title="#{item.productName}" look="info" style="display:block; text-align:center" >                      
                             <h:graphicImage value="resources/Images/testImage.gif" alt="Generic placeholder thumbnail" />
                             <h4>#{item.productName}</h4>
-                            <b:label text="#{item.productPrice} VND" severity="danger"/>  <br></br>
+                            <b:label text="#{productJSFManagedBean.countCharge(item.productPrice)}" severity="danger"/> <br></br>
 
                             <b:commandButton size="xs" look="success" value="Add to Cart" action="#{productJSFManagedBean.createOderDetail(item)}" >
                                 <b:alert rendered="#{productJSFManagedBean.sp == null}" severity="success" closable="true"><strong>Well done!</strong> You successfully add new product.</b:alert>

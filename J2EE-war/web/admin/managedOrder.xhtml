@@ -51,7 +51,7 @@
             }
             @media (min-width: 768px) {
                 .main {
-                    padding-left: 20px;
+                    padding-left: 40px;
                     padding-right: 40px;
                 }
             }
@@ -93,59 +93,66 @@
 
         <b:container  fluid="true">
             <b:row>
-                <b:column col-sm="2" col-md="2" styleClass="sidebar">
+                <b:column col-sm="6" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink header="Dasboard Links" />
-                        <b:navLink href="dashboard.xhtml" value="Manager Products" active="true"/>
+                        <b:navLink href="dashboard.xhtml" value="Manager Products" />
                         <b:navLink href="managercategory.xhtml" value="Manager Category" />
                     </b:listLinks>
                     <b:listLinks >
-                        <b:navLink value="Manager Order" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Order" active="true" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Bill" />
                         <b:navLink value="Manager User" />        
                     </b:listLinks>             
                 </b:column>
-                <b:column col-md="9" offset="1" styleClass="main" >
-                    <h1>Manager Product</h1>
-                    <h:form>
-                        <b:button value="New Product" outcome="addproduct" size="lg" look="primary"/>#{' '}
-                        <hr/>
-                        <b:row styleClass="table-responsive">                         
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.danhsach()}" var="item">
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.productID}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                                    <h:outputText value="#{item.productName}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Description" /></f:facet>
-                                    <h:outputText value="#{item.productDescription}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Price" /></f:facet>
-                                    <h:outputText value="#{item.productPrice}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Qyantity" /></f:facet>
-                                    <h:outputText value="#{item.productQuantity}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Status" /></f:facet>
-                                    <h:outputText value="#{item.productStatus}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
-                                </h:column>
-                            </h:dataTable>                      
-                        </b:row>
-                    </h:form>
+                <b:column  col-sm="7" col-md="8" offset="1" styleClass="main" >
+                    <h1>Manager List Order</h1>                  
+                    <hr/>
+                    <b:label severity="info" text="List Order"></b:label>
+                    <b:row styleClass="table-responsive">  
+                        <h:form>
+                                <b:column>
+                                    <h:dataTable styleClass="table table-striped" value="#{orderJSFManagedBean.findAllOrder()}" var="item">
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="#" /></f:facet>
+                                            <h:outputText value="#{item.customerOrderID}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Date" /></f:facet>
+                                            <h:outputText value="#{item.customerOrderDate}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                                            <h:outputText value="#{item.customerOrderState}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Payment" /></f:facet>
+                                            <h:outputText value="#{paymentJSFManagedBean.findPaymentName(item)}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="CusName" /></f:facet>
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerName(item)}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Addres" /></f:facet>
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerAddres(item)}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Name Customer" /></f:facet>
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerEmail(item)}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name ="header">Type</f:facet>
+                                            <b:commandButton look="danger" value="Check Out" action="#{orderJSFManagedBean.checkOutOrder(item)}" ></b:commandButton>                            
+                                        </h:column>
+                                    </h:dataTable>
+                                </b:column>
+         
+                        </h:form>
+                    </b:row>
                 </b:column>
             </b:row>       
-        </b:container>                
+        </b:container>             
+        
     </h:body>
 </html>

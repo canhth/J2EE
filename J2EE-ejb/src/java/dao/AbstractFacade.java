@@ -6,8 +6,10 @@
 
 package dao;
 
-import java.util.List;
+import java.util.*;
+
 import javax.persistence.EntityManager;
+
 
 /**
  *
@@ -37,7 +39,7 @@ public abstract class AbstractFacade<T> {
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }
-
+    
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -60,5 +62,50 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+    public List<T> findWithNamedQuery(String namedQueryName) {
+        return getEntityManager().createNamedQuery(namedQueryName).getResultList();
+    }
+
+   /* public List findWithNamedQuery(String namedQueryName, Map<String, Object> parameters, int resultLimit) {
+        Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
+        Query query = getEntityManager().createNamedQuery(namedQueryName);
+        if (resultLimit > 0) {
+            query.setMaxResults(resultLimit);
+        }
+        for (Map.Entry<String, Object> entry : rawParameters) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        return query.getResultList();
+    }*/
+
+    public List<T> findWithQuery(String queryName) {
+        return getEntityManager().createQuery(queryName).getResultList();
+    }
+
+    public List<T> findByNativeQuery(String sql) {
+        return getEntityManager().createNativeQuery(sql, entityClass).getResultList();
+    }
+
+   /* public T findSingleWithNamedQuery(String namedQueryName) {
+        T result = null;
+        try {
+            result = (T) getEntityManager().createNamedQuery(namedQueryName).getSingleResult();
+        } catch (NoResultException e) {
+        }
+        return result;
+  }*/
+ 
+    /*public T findSingleWithNamedQuery(String namedQueryName, Map<String, Object> parameters) {
+        Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
+        Query query = getEntityManager().createNamedQuery(namedQueryName);
+        for (Map.Entry<String, Object> entry : rawParameters) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        T result = null;
+        try {
+            result = (T) query.getSingleResult();
+        } catch (NoResultException e) {
+        }
+        return result;
+    }*/
 }

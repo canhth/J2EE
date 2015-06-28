@@ -51,7 +51,7 @@
             }
             @media (min-width: 768px) {
                 .main {
-                    padding-left: 20px;
+                    padding-left: 40px;
                     padding-right: 40px;
                 }
             }
@@ -75,7 +75,7 @@
         </style>
     </h:head>
     <h:body style="padding-top: 60px">
-
+  
 
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
@@ -96,8 +96,8 @@
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink header="Dasboard Links" />
-                        <b:navLink href="dashboard.xhtml" value="Manager Products" active="true"/>
-                        <b:navLink href="managercategory.xhtml" value="Manager Category" />
+                        <b:navLink href="dashboard.xhtml" value="Manager Products" />
+                        <b:navLink href="managercategory.xhtml" value="Manager Category" active="true"/>
                     </b:listLinks>
                     <b:listLinks >
                         <b:navLink value="Manager Order" href="managedOrder.xhtml" />
@@ -105,47 +105,38 @@
                         <b:navLink value="Manager User" />        
                     </b:listLinks>             
                 </b:column>
-                <b:column col-md="9" offset="1" styleClass="main" >
-                    <h1>Manager Product</h1>
-                    <h:form>
-                        <b:button value="New Product" outcome="addproduct" size="lg" look="primary"/>#{' '}
-                        <hr/>
-                        <b:row styleClass="table-responsive">                         
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.danhsach()}" var="item">
+                <b:column  col-sm="5" col-md="8" offset="1" styleClass="main" >
+                    <h1>Manager Category</h1>                  
+                    <h:form > 
+                        <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Category Name:" />
+                        <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
+                        </b:panelGrid>
+                        <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
+                    </h:form>
+                    
+                    <hr/>
+                    <b:row styleClass="table-responsive">  
+                        <h:form>
+                            <b:label severity="info" text="List Category"></b:label>
+                            <h:dataTable styleClass="table table-striped" var="item" value="#{categoryJSFManagedBean.allCategory}" >
                                 <h:column>
                                     <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.productID}" />
+                                    <h:outputText value="#{item.categoryID}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                                    <h:outputText value="#{item.productName}" />
-                                </h:column>
+                                    <f:facet name="header"><h:outputText value="Category Name" /></f:facet>
+                                    <h:outputText value="#{item.categoryName}" />
+                                </h:column>                
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Description" /></f:facet>
-                                    <h:outputText value="#{item.productDescription}" />
+                                    <f:facet name ="header">Type</f:facet>
+                                    <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Price" /></f:facet>
-                                    <h:outputText value="#{item.productPrice}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Qyantity" /></f:facet>
-                                    <h:outputText value="#{item.productQuantity}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Status" /></f:facet>
-                                    <h:outputText value="#{item.productStatus}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
-                                </h:column>
-                            </h:dataTable>                      
-                        </b:row>
-                    </h:form>
+                            </h:dataTable>
+                        </h:form>
+                    </b:row>
                 </b:column>
             </b:row>       
-        </b:container>                
+        </b:container>             
     </h:body>
 </html>
