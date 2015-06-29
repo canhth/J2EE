@@ -48,11 +48,15 @@
             <h1>List Product</h1>
             <b:jumbotron>
                 <h5>Please chose optional Product</h5>
-                <b:dropButton look="warning" value="   Choose Category   ">
-                    <b:navLink value="Phones" onclick=""></b:navLink>
-                    <b:navLink value="Lap Top" href="#"></b:navLink>
-                    <b:navLink value="Camera" href="#"></b:navLink>
+                <h:form>
+                <b:dropButton look="warning" value="   Choose Category Product   ">
+                    <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
+                        <b:commandButton look="success" style="width: 150px;height: 35px" value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
+                        <br></br>  
+                    </ui:repeat>
+                    <b:commandButton look="success" style="width: 150px;height: 35px" value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
                 </b:dropButton>
+                </h:form>
             </b:jumbotron>
 
             <h:form>
@@ -66,8 +70,7 @@
                                 </p:graphicImage>
                             </p:commandLink><br></br>
                             <h4><b:label text="#{productJSFManagedBean.countCharge(item.productPrice)}" severity="danger"/> </h4><br></br>
-
-                            <b:commandButton size="sm" look="success" value="Add to Cart" action="#{productJSFManagedBean.createOderDetail(item)}" >
+                            <b:commandButton size="sm" look="success" value="Add to Cart" icon="glyphicon glyphicon-shopping-cart" action="#{productJSFManagedBean.createOderDetail(item)}" >
                                 <b:alert rendered="#{productJSFManagedBean.sp == null}" severity="success" closable="true"><strong>Well done!</strong> You successfully add new product.</b:alert>
                             </b:commandButton>
                         </b:panel>          

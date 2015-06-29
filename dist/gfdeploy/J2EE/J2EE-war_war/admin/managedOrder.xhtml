@@ -95,24 +95,33 @@
             <b:row>
                 <b:column col-sm="6" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" />
-                        <b:navLink href="dashboard.xhtml" value="Manager Products" />
-                        <b:navLink href="managercategory.xhtml" value="Manager Category" />
+                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home" />
+                        <b:navLink href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list"/>
+                        <b:navLink href="managercategory.xhtml" value="Manager Category"  icon="glyphicon glyphicon-tasks"/>
                     </b:listLinks>
                     <b:listLinks >
-                        <b:navLink value="Manager Order" active="true" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Bill" />
-                        <b:navLink value="Manager User" />        
+                    <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />         
                     </b:listLinks>             
                 </b:column>
                 <b:column  col-sm="7" col-md="10" offset="2" styleClass="main" >
                     <h1>Manager List Order</h1>                  
                     <hr/>
                     <b:label severity="info" text="List Order"></b:label>
+                    <h:form>
+                    <b:dropButton look="warning" value="   Choose Type Order   ">
+                        <b:commandButton value="Duyet Don Hang" action="#{orderJSFManagedBean.selectOrderByStatus(1)}"></b:commandButton>   
+                        <b:commandButton value="Don Hang Dang Giao" action="#{orderJSFManagedBean.selectOrderByStatus(2)}" ></b:commandButton>
+                        <b:commandButton value="Don Hang Hoan Tat" action="#{orderJSFManagedBean.selectOrderByStatus(3)}" ></b:commandButton>
+                        <b:commandButton value="Don Hang Da Huy" action="#{orderJSFManagedBean.selectOrderByStatus(4)}"></b:commandButton>
+                        <b:commandButton value="Tat Ca Don Hang" action="#{orderJSFManagedBean.findAllOrder()}"></b:commandButton>
+                    </b:dropButton>
+                    </h:form>
                     <b:row styleClass="table-responsive">  
                         <h:form>
                                 <b:column>
-                                    <h:dataTable styleClass="table table-striped" value="#{orderJSFManagedBean.findAllOrder()}" var="item">
+                                    <h:dataTable styleClass="table table-striped" value="#{orderJSFManagedBean.customerOrder}" var="item">
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="#" /></f:facet>
                                             <h:outputText value="#{item.customerOrderID}" />
@@ -143,7 +152,7 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name ="header">Type</f:facet>
-                                            <b:commandButton look="danger" value="Check Out" action="#{orderJSFManagedBean.checkOutOrder(item)}" ></b:commandButton>                            
+                                            <b:commandButton look="danger" iconAlign="right" icon="glyphicon glyphicon-paste" value="Check Out" action="#{orderJSFManagedBean.checkOutOrder(item)}" ></b:commandButton>                            
                                         </h:column>
                                     </h:dataTable>
                                 </b:column>

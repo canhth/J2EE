@@ -25,9 +25,12 @@ import utils.SendEmail;
 @RequestScoped
 public class OrderJSFManagedBean implements Serializable{
     @EJB
+    private ProductFacade productFacade;
+    @EJB
     private CustomerOrderFacade customerOrderFacade;
     @EJB
     private CustomerOrderDetailFacade customerOrderDetailFacade;
+    
     
     public List<CustomerOrder> customerOrder = new ArrayList<CustomerOrder>();
 
@@ -86,19 +89,25 @@ public class OrderJSFManagedBean implements Serializable{
         newCustomerOrder.setCustomerOrderState("Cho Duyet Don Hang");
         newCustomerOrder.setCustomerOrderPaymentID(this.paymentID);
         this.customerOrderFacade.create(newCustomerOrder);
-                 
+         
+        
         for (Product product : productList)
         {
             CustomerOrderDetail orderDetails = new CustomerOrderDetail();
             orderDetails.setCustomerOrderID(newCustomerOrder.getCustomerOrderID());
             orderDetails.setProductID(product.getProductID());
-            orderDetails.setQuantity(1);
+            orderDetails.setQuantity(product.getProductQuantity());
             orderDetails.setPrice(product.getProductPrice());
             customerOrderDetailFacade.create(orderDetails);
+       
+            Product productOld = new Product();
+            productOld = this.productFacade.find(product.getProductID());
+            productOld.setProductQuantity(productOld.getProductQuantity() - product.getProductQuantity());
+            this.productFacade.edit(productOld);
         }
         
         // Send Email
-        SendEmail.sendEmail(LoginJSFManagedBean.customer.getCustomerEmail());
+        //SendEmail.sendEmail(LoginJSFManagedBean.customer.getCustomerEmail());
         return "checkout";
     }
 
@@ -119,6 +128,27 @@ public class OrderJSFManagedBean implements Serializable{
         this.customerOrderFacade.edit(this.objectCustomerOrder);
         this.isUpdateOrder = true;
         return "managedOrder?faces-redirect=true";
+    }
+    
+    /*  Chon Loai Don Hang */
+    
+    public String selectOrderByStatus(int id)
+    {
+        String status = "Cho Duyet Don Hang";
+        switch(id)
+        {
+            case 1: status = "Cho Duyet Don Hang"; 
+                break;
+            case 2: status = "Dang Giao Hang";
+                break;
+            case 3: status = "Hoan Tat";
+                break;
+            case 4: status = "Huy Don Hang";
+                break;
+        }
+        
+        this.customerOrder = customerOrderFacade.findWithQuery("SELECT c FROM CustomerOrder c WHERE c.customerOrderState = '"+status+"'");
+        return "managedOrder";
     }
     
     @PostConstruct

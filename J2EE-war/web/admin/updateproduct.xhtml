@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Project Name</title>
         <meta name="author" content="The Author"></meta>
@@ -22,7 +24,13 @@
                      Gia San Pham: <b:inputText value="#{productJSFManagedBean.sp.productPrice}"></b:inputText>
                      So Luong: <b:inputText value="#{productJSFManagedBean.sp.productQuantity}"></b:inputText>
                      Thong Tin: <b:inputText value="#{productJSFManagedBean.sp.productDescription}"></b:inputText>        
-                     Tinh Trang: <b:inputText value="#{productJSFManagedBean.sp.productStatus}"></b:inputText>                 
+                     Tinh Trang: <b:inputText value="#{productJSFManagedBean.sp.productStatus}"></b:inputText>    
+
+                     <b:selectOneMenu span="5" value="#{productJSFManagedBean.sp.productCategoryID}">
+                            <f:selectItem itemValue="1" itemLabel="Dien Thoai" />
+                            <f:selectItem itemValue="2" itemLabel="May Tinh" />
+                            <f:selectItem itemValue="3" itemLabel="Gia Dung" />
+                        </b:selectOneMenu>
                      <b:commandButton look="primary" value="Save" action="#{productJSFManagedBean.update()}" ></b:commandButton>
                  </h:form>
             </b:jumbotron>     

@@ -82,7 +82,7 @@
                 <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
                 <b:navLink value="Dashboard" href="#"></b:navLink>
                 <b:navLink value="Settings" href="#"></b:navLink>
-                <b:navLink value="Help" href="#"></b:navLink>
+                <b:navLink value="Help" href="#"></b:navLink>s
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
@@ -95,23 +95,30 @@
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" />
-                        <b:navLink href="dashboard.xhtml" value="Manager Products" active="true"/>
-                        <b:navLink href="managercategory.xhtml" value="Manager Category" />
+                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home"/>
+                        <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" active="true"/>
+                        <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
                     <b:listLinks >
-                        <b:navLink value="Manager Order" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Bill" />
-                        <b:navLink value="Manager User" />        
+                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="10" offset="2" styleClass="main" >
                     <h1>Manager Product</h1>
                     <h:form>
-                        <b:button value="New Product" outcome="addproduct" size="lg" look="primary"/>#{' '}
+                        <b:dropButton look="warning" value="   Choose Category Product   ">
+                            <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
+                                <b:commandButton value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
+                                <br></br>  
+                            </ui:repeat>
+                            <b:commandButton value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
+                        </b:dropButton>
+                        <b:button value="New Product" outcome="addproduct" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>#{' '}
                         <hr/>
                         <b:row styleClass="table-responsive">                         
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.danhsach()}" var="item">
+                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.listProducs}" var="item">
                                 <h:column>
                                     <f:facet name="header"><h:outputText value="#" /></f:facet>
                                     <h:outputText value="#{item.productID}" />
@@ -138,8 +145,8 @@
                                 </h:column>
                                 <h:column>
                                     <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
                             </h:dataTable>                      
                         </b:row>

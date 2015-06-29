@@ -9,10 +9,6 @@ package controller;
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import dao.*;
 import entity.*;
-
-
-
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -107,7 +103,8 @@ public class ProductJSFManagedBean implements Serializable{
     
     public List<Product> danhsach()
     {
-        return this.productFacade.findAll();
+        this.listProducs = this.productFacade.findAll();
+        return this.listProducs;
     }
     public void deleteProduct(Product sp)
     {
@@ -140,6 +137,7 @@ public class ProductJSFManagedBean implements Serializable{
         if(LoginJSFManagedBean.customer != null)
         {
            this.sp = product;
+           product.setProductQuantity(1);
            this.productOrder.add(product);
            return "index";
         }
@@ -173,16 +171,23 @@ public class ProductJSFManagedBean implements Serializable{
         
     } 
      
-  
     public String backIndex()
     {
         this.productOrder.clear();      
         return "index?faces-redirect=true";
     }
     
+   
+    
     public String findProductNameByID(int productID)
     {
         return this.productFacade.find(productID).getProductName();
+    }
+    
+    public String findProductByCategory(int id)
+    {
+        this.listProducs = productFacade.findWithQuery("SELECT p FROM Product p WHERE p.productCategoryID = '"+id+"'");
+        return "dashboard";
     }
     
     /*File Upload*/
