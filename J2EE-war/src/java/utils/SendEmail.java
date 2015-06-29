@@ -13,7 +13,7 @@ import javax.mail.internet.*;
 import javax.activation.*;
 
 public class SendEmail {
-    public void sendEmail(String to)
+    public static void sendEmail(String to)
     {
         
         String from = "hoangcanhsek6@gmail.com";

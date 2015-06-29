@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import utils.SendEmail;
 /**
  *
  * @author Royal
@@ -95,6 +96,9 @@ public class OrderJSFManagedBean implements Serializable{
             orderDetails.setPrice(product.getProductPrice());
             customerOrderDetailFacade.create(orderDetails);
         }
+        
+        // Send Email
+        SendEmail.sendEmail(LoginJSFManagedBean.customer.getCustomerEmail());
         return "checkout";
     }
 

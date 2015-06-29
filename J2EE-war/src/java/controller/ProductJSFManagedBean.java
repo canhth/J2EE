@@ -6,22 +6,34 @@
 
 package controller;
 
-import com.oracle.jrockit.jfr.Producer;
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import dao.*;
 import entity.*;
-import java.io.IOException;
+
+
+
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import javax.faces.validator.ValidatorException;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.io.Serializable;
-import java.text.DecimalFormat;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 /**
  *
  * @author Royal
@@ -30,11 +42,30 @@ import java.text.DecimalFormat;
 @SessionScoped
 public class ProductJSFManagedBean implements Serializable{
     @EJB
-    private CategoryFacade categoryFacade;
-    @EJB
     private ProductFacade productFacade;
     private boolean isAddNewProductSucsses;
     private Product sp = new Product();
+    private StreamedContent image;      
+
+    
+    public StreamedContent getImage() {
+       FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        }
+        else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            Product image = productFacade.find(Integer.valueOf(id));
+            return new DefaultStreamedContent(new ByteArrayInputStream(image.getImageFile()));
+        }
+    }
+
+    public void setImage(StreamedContent image) {
+        this.image = image;
+    }
 
     public boolean isIsAddNewProductSucsses() {
         return isAddNewProductSucsses;
@@ -50,7 +81,6 @@ public class ProductJSFManagedBean implements Serializable{
         return listProducs;
     }
     
-    public List<Category> listCategory;
     public List<Product> convertProducts;
     
     public List<Product> productOrder = new ArrayList<Product>();  
@@ -139,10 +169,11 @@ public class ProductJSFManagedBean implements Serializable{
     @PostConstruct
     public void init()
     {
-        listCategory = categoryFacade.findAll();
-        listProducs = productFacade.findAll();
+        this.listProducs = productFacade.findAll();
+        
     } 
-       
+     
+  
     public String backIndex()
     {
         this.productOrder.clear();      
@@ -154,4 +185,22 @@ public class ProductJSFManagedBean implements Serializable{
         return this.productFacade.find(productID).getProductName();
     }
     
+    /*File Upload*/
+    private UploadedFile file;
+ 
+    public UploadedFile getFile() {
+        return file;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+     
+    public void upload() {
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+  
 }
