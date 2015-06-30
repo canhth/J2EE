@@ -25,6 +25,10 @@ import utils.SendEmail;
 @RequestScoped
 public class OrderJSFManagedBean implements Serializable{
     @EJB
+    private InvoiceDetailFacade invoiceDetailFacade;
+    @EJB
+    private InvoiceFacade invoiceFacade;
+    @EJB
     private ProductFacade productFacade;
     @EJB
     private CustomerOrderFacade customerOrderFacade;
@@ -125,7 +129,15 @@ public class OrderJSFManagedBean implements Serializable{
 
     public String updateOrder()
     {  
-        this.customerOrderFacade.edit(this.objectCustomerOrder);
+        this.customerOrderFacade.edit(objectCustomerOrder);
+        String status = objectCustomerOrder.getCustomerOrderState();
+        if (status.equals("Dang Giao Hang"))
+        {
+            
+        } else if (status.equals("Hoan Tat"))
+        {
+            
+        }
         this.isUpdateOrder = true;
         return "managedOrder?faces-redirect=true";
     }
