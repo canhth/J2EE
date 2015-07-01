@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Project Name</title>
-        <meta name="author"  http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+        <title>Dashboard Sales</title>   
         <style type="text/css">
             .sub-header {
                 border-bottom: 1px solid #eee;
@@ -75,13 +75,24 @@
             }
         </style>
     </h:head>
-    <h:body style="padding: 60px;">
-        <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true">
-            <b:navbarLinks>
-                <b:navLink value="Dash Board" href="dashboard.xhtml"></b:navLink>
+    <h:body style="padding-top: 60px">
+
+
+        <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
+            <b:navbarLinks pull="right">
+                <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
+                <b:navLink value="Dashboard" href="#"></b:navLink>
+                <b:navLink value="Settings" href="#"></b:navLink>
+                <b:navLink value="Help" href="#"></b:navLink>s
             </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                </div>
+            </h:form>
         </b:navBar>
-        <b:container>
+
+        <b:container  fluid="true">
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -90,49 +101,55 @@
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
                     <b:listLinks >
-                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" active="true"/>
-                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
+                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" active="true"/>
                         <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
                         <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
                     </b:listLinks>             
                 </b:column>
-                <b:column col-md="10" offset="2" styleClass="main" >
-                    <b:button size="sm" value="Back" outcome="managedOrder" look="primary"/>
-                    <h2>Managed Order.</h2>
+                <b:column col-md="11" offset="2" styleClass="main" >
+                    <b:button size="sm" value="Back" outcome="managedinvoice" look="primary"/>
+                    <h2>Managed Invoices.</h2>
+                    
                     <b:label severity="danger" text="Recommend type input correctly" />
                     <h5></h5>
                     <h:form enctype="multipart/form-data;charset=UTF-8">   
                         <b:panelGrid colSpans="2,10">
                             <h:outputLabel value="ID:" />
-                            <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderID}"  />       
+                            <b:inputText span="8" readonly="true" value="#{invoiceJSFManagedBean.objectInvoice.invoiceID}"  />       
                             <h:outputLabel value="Date:" />
-                            <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderDate}"  />                                 
+                            <b:inputText span="8" readonly="true" value="#{invoiceJSFManagedBean.objectInvoice.invoiceDate.toLocaleString()}"  />                                 
                             <h:outputLabel value="Description:" />
-                            <b:inputText span="8" readonly="true" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderName}" />
-                            <h:outputLabel value="Customer Name:" />
-                            <b:inputText span="5" readonly="true" value="#{customerJSFManagedBean.findCustomerName(orderJSFManagedBean.objectCustomerOrder.customerID)}"/>
+                            <b:inputText span="8" readonly="true" value="#{invoiceJSFManagedBean.objectInvoice.invoiceName}" />
                             <h:outputLabel value="Payment:" />
-                            <b:inputText span="5" readonly="true" value="#{paymentJSFManagedBean.findPaymentName(orderJSFManagedBean.objectCustomerOrder.customerOrderPaymentID)}"/>
+                            <b:inputText span="5" readonly="true" value="#{paymentJSFManagedBean.findPaymentName(invoiceJSFManagedBean.objectInvoice.invoicePaymentID)}"/>
+                            <h:outputLabel value="Customer Name:" />
+                            <b:inputText span="5" readonly="true" value="#{customerJSFManagedBean.findCustomerName(invoiceJSFManagedBean.objectInvoice.customerID)}"/>
+                            <h:outputLabel value="Customer Name:" />
+                            <b:inputText span="5" readonly="true" value="#{customerJSFManagedBean.findCustomerEmail(invoiceJSFManagedBean.objectInvoice.customerID)}"/>
+                            <h:outputLabel value="Customer Name:" />
+                            <b:inputText span="5" readonly="true" value="#{customerJSFManagedBean.findCustomerPhone(invoiceJSFManagedBean.objectInvoice.customerID)}"/>
                             <h:outputLabel value="Trang Thai:" />
-                            <b:selectOneMenu span="5" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderState}">
-                                <f:selectItem itemValue="Dang Giao Hang" itemLabel="Bat Dau Giao Hang" />
-                                <f:selectItem itemValue="Hoan Tat" itemLabel="Da Thanh Toan Khi Nhan Hang" />
-                                <f:selectItem itemValue="Huy Bo" itemLabel="Huy Bo Don Hang" />
+                            <b:selectOneMenu span="5" value="#{invoiceJSFManagedBean.objectInvoice.invoiceState}">
+                                <f:selectItem itemValue="Invoice not paid" itemLabel="Invoice not Paid" />
+                                <f:selectItem itemValue="Invoice already paid" itemLabel="Invoice already Paid" />                           
                             </b:selectOneMenu>
                         </b:panelGrid>                 
-                        <b:commandButton look="primary" value="Save Order" action="#{orderJSFManagedBean.updateOrder()}">
-                            <b:alert rendered="#{orderJSFManagedBean.isUpdateOrder == true}" severity="success" closable="true"><strong>Well done!</strong> You successfully update Order.</b:alert>
+                        <b:commandButton look="primary" value="Save Invoice" action="#{invoiceJSFManagedBean.updateInvoice()}">
                         </b:commandButton>
+
                     </h:form>               
+                    <h2>Tổng tiền:  <b:label severity="danger" text="#{invoiceDetailJSFManagedBean.countCharge()}"></b:label> VNĐ.</h2>
                 </b:column>
-            </b:row>
+            </b:row>   
+
             <b:column col-md="10" offset="2" styleClass="main" >
-                <h3><b:label severity="info" text="Information of Order." /> </h3>
-                <h:form>
-                    <h:dataTable  styleClass="table table-condensed" var="item" value="#{orderDetailJSFManagedBean.getAllOrderDetail()}" border="1">
+                <h3><b:label severity="info" text="Information of Invoice." /> </h3>
+                <h:form id="formDetail">
+                    <h:dataTable  styleClass="table table-condensed" var="item" value="#{invoiceDetailJSFManagedBean.getAllInvoiceDetail()}" border="1">
                         <h:column>
                             <f:facet name="header"><h:outputText value="#" /></f:facet>
-                            <h:outputText value="#{item.customerOrderID}" />
+                            <h:outputText value="#{item.invoiceID}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="Product" /></f:facet>
@@ -140,28 +157,28 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="Price" /></f:facet>
-                            <h:outputText value="#{item.price}" ><f:convertNumber pattern="###,###,###,###" /></h:outputText>                       
+                            <h:outputText value="#{item.productPrice}" ><f:convertNumber pattern="###,###,###,###" /></h:outputText>                       
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="Quantity" /></f:facet>
-                            <h:outputText value="#{item.quantity}" />
+                            <h:outputText value="#{item.quantity}" ><f:convertNumber pattern="###,###,###,###" /></h:outputText>                       
                         </h:column>
                         <h:column>
                             <f:facet name="header" ><h:outputText value="Edit Quantity" /></f:facet>                       
                             <p:fragment autoUpdate="true">   
-                                <p:inputText id="txt" value="#{orderDetailJSFManagedBean.quantity}" />                                 
-                                <p:commandButton value="Edit" ajax="false" action="#{orderDetailJSFManagedBean.updateColumnOrderDetail(item)}" />                                                          
+                                <p:inputText id="txt" value="#{invoiceDetailJSFManagedBean.quantity}" />                                 
+                                <p:commandButton value="Edit" ajax="false" action="#{invoiceDetailJSFManagedBean.updateColumnInvoiceDetail(item)}" />                                                          
                             </p:fragment>
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputText value="Delete Product"/></f:facet>
-                            <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="" action="#{orderDetailJSFManagedBean.deleteOrderDetail(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>
+                            <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="" action="#{invoiceDetailJSFManagedBean.deleteInvoiceDetail(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>
                         </h:column>
+                            
                     </h:dataTable>
-                </h:form>
-                <h2>Tổng tiền:  <b:label text="#{orderDetailJSFManagedBean.countCharge(orderDetailJSFManagedBean.listOrderDetail)}"></b:label> VNĐ</h2>
-
+                  
+                </h:form>               
             </b:column>
-        </b:container>   
+        </b:container>                
     </h:body>
 </html>

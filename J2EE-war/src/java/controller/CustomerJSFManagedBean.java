@@ -42,21 +42,21 @@ public class CustomerJSFManagedBean implements Serializable{
         return this.customerFacade.find(idCus);
     }
     
-    public String findCustomerName(CustomerOrder order)
+    public String findCustomerName(int order)
     {           
-        return this.customerFacade.find(order.getCustomerID()).getCustomerName();
+        return this.customerFacade.find(order).getCustomerName();
     }
-    public String findCustomerPhone(CustomerOrder order)
+    public String findCustomerPhone(int order)
     {           
-        return this.customerFacade.find(order.getCustomerID()).getCustomerPhone();
+        return this.customerFacade.find(order).getCustomerPhone();
     }
-    public String findCustomerEmail(CustomerOrder order)
+    public String findCustomerEmail(int order)
     {           
-        return this.customerFacade.find(order.getCustomerID()).getCustomerEmail();
+        return this.customerFacade.find(order).getCustomerEmail();
     }
-    public String findCustomerAddres(CustomerOrder order)
+    public String findCustomerAddres(int order)
     {           
-        return this.customerFacade.find(order.getCustomerID()).getCustomerAddres();
+        return this.customerFacade.find(order).getCustomerAddres();
     }
     
 }

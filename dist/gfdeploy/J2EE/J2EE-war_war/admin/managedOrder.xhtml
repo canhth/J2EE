@@ -100,8 +100,9 @@
                         <b:navLink href="managercategory.xhtml" value="Manager Category"  icon="glyphicon glyphicon-tasks"/>
                     </b:listLinks>
                     <b:listLinks >
-                    <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
+                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" active="true" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml"/>
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-usd" href="managedreturnproduct.xhtml"/>
                         <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />         
                     </b:listLinks>             
                 </b:column>
@@ -136,23 +137,23 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="Payment" /></f:facet>
-                                            <h:outputText value="#{paymentJSFManagedBean.findPaymentName(item)}" />
+                                            <h:outputText value="#{paymentJSFManagedBean.findPaymentName(item.customerOrderPaymentID)}" />
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="CusName" /></f:facet>
-                                            <h:outputText value="#{customerJSFManagedBean.findCustomerName(item)}" />
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerName(item.customerID)}" />
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="Addres" /></f:facet>
-                                            <h:outputText value="#{customerJSFManagedBean.findCustomerAddres(item)}" />
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerAddres(item.customerID)}" />
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="Name Customer" /></f:facet>
-                                            <h:outputText value="#{customerJSFManagedBean.findCustomerEmail(item)}" />
+                                            <h:outputText value="#{customerJSFManagedBean.findCustomerEmail(item.customerID)}" />
                                         </h:column>
                                         <h:column>
                                             <f:facet name ="header">Type</f:facet>
-                                            <b:commandButton look="danger" iconAlign="right" icon="glyphicon glyphicon-paste" value="Check Out" action="#{orderJSFManagedBean.checkOutOrder(item)}" ></b:commandButton>                            
+                                            <b:commandButton look="danger" iconAlign="right" icon="glyphicon glyphicon-paste" value="" action="#{orderJSFManagedBean.checkOutOrder(item)}" ></b:commandButton>                            
                                         </h:column>
                                     </h:dataTable>
                                 </b:column>

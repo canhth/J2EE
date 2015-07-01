@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.event.CloseEvent;
 
 /**
  *
@@ -207,5 +208,12 @@ public class ProductJSFManagedBean implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-  
+    public void destroyWorld() {
+        addMessage("System Error", "Please try again later.");
+    }
+     
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

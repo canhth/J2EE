@@ -34,8 +34,8 @@ public class PaymentJSFManagedBean implements Serializable{
         return this.paymentFacade.find(idPayment);
     }
     
-    public String findPaymentName(CustomerOrder order)
+    public String findPaymentName(Integer order)
     {           
-        return this.paymentFacade.find(order.getCustomerOrderPaymentID()).getPaymentName();
+        return this.paymentFacade.find(order).getPaymentName();
     }
 }

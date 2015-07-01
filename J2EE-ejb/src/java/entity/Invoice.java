@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,12 +38,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Invoice.findByInvoiceDate", query = "SELECT i FROM Invoice i WHERE i.invoiceDate = :invoiceDate"),
     @NamedQuery(name = "Invoice.findByInvoiceState", query = "SELECT i FROM Invoice i WHERE i.invoiceState = :invoiceState"),
     @NamedQuery(name = "Invoice.findByInvoicePaymentID", query = "SELECT i FROM Invoice i WHERE i.invoicePaymentID = :invoicePaymentID"),
-    @NamedQuery(name = "Invoice.findByInvoiceCost", query = "SELECT i FROM Invoice i WHERE i.invoiceCost = :invoiceCost")})
+    @NamedQuery(name = "Invoice.findByInvoiceCost", query = "SELECT i FROM Invoice i WHERE i.invoiceCost = :invoiceCost"),
+    @NamedQuery(name = "Invoice.findByOrderID", query = "SELECT i FROM Invoice i WHERE i.orderID = :orderID")})
 public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Invoice_ID")
     private Integer invoiceID;
     @Column(name = "CustomerID")
@@ -59,6 +61,8 @@ public class Invoice implements Serializable {
     private Integer invoicePaymentID;
     @Column(name = "InvoiceCost")
     private Integer invoiceCost;
+    @Column(name = "OrderID")
+    private Integer orderID;
 
     public Invoice() {
     }
@@ -121,6 +125,14 @@ public class Invoice implements Serializable {
 
     public void setInvoiceCost(Integer invoiceCost) {
         this.invoiceCost = invoiceCost;
+    }
+
+    public Integer getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
     }
 
     @Override

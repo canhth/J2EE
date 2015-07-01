@@ -10,6 +10,7 @@ import java.util.*;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 /**
  *
  * @author Royal
@@ -23,10 +24,29 @@ public class OrderDetailJSFManagedBean implements Serializable{
 
     private List<CustomerOrderDetail> listOrderDetail = new ArrayList<CustomerOrderDetail>();
 
+    public Integer quantity = 1;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }  
     public List<CustomerOrderDetail> getListOrderDetail() {
         return listOrderDetail;
     }
 
+    public static Double cost;
+
+    public static Double getCost() {
+        return cost;
+    }
+
+    public static void setCost(Double cost) {
+        OrderDetailJSFManagedBean.cost = cost;
+    }
+    
+    
     public void setListOrderDetail(List<CustomerOrderDetail> listOrderDetail) {
         this.listOrderDetail = listOrderDetail;
     }
@@ -51,13 +71,20 @@ public class OrderDetailJSFManagedBean implements Serializable{
             charge += productOrder.getPrice() * productOrder.getQuantity();
         }
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-        return formatter.format(charge);
-        /*float epsilon = 0.004f; // 4 tenths of a cent
-        if (Math.abs(Math.round(charge) - charge) < epsilon) {
-            return String.format("%10.0f", charge); // sdb
-        } else {
-            return String.format("%10.2f", charge); // dj_segfault
-        }*/
+        cost = charge;
+        return formatter.format(charge);      
+    }
+    
+    public String updateColumnOrderDetail(CustomerOrderDetail orderDetail)
+    {   
+        orderDetail.setQuantity(this.quantity);
+        this.customerOrderDetailFacade.edit(orderDetail);
+        return "managedOrder";
+    }
+    public String deleteOrderDetail(CustomerOrderDetail orderDetail)
+    {
+        this.customerOrderDetailFacade.remove(orderDetail);
+        return "managedOrder";
     }
     
 }

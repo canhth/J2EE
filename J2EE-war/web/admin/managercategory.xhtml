@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -99,8 +100,9 @@
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" active="true"/>
                     </b:listLinks>
                     <b:listLinks >
-                       <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
+                       <b:navLink value="Manager Order"  icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-usd" href="managedreturnproduct.xhtml" />
                         <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
                     </b:listLinks>             
                 </b:column>
@@ -111,6 +113,10 @@
                         <h:outputLabel value="Category Name:" />
                         <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
                         </b:panelGrid>
+                        <p:growl id="growl" life="2000" />
+                        <p:commandLink id="ajax" update="growl" actionListener="#{categoryJSFManagedBean.insertCategory()}">
+                            <h:outputText value="Ajax Submit" />
+                        </p:commandLink>
                         <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
                     </h:form>
                     
@@ -129,6 +135,11 @@
                                 </h:column>                
                                 <h:column>
                                     <f:facet name ="header">Type</f:facet>
+                                    <p:growl id="growl" life="2000" />
+                                    <p:commandLink id="ajax" update="growl" actionListener="#{categoryJSFManagedBean.deleteCategory(item)}">
+                                        <h:outputText value="Ajax Submit" />
+                                    </p:commandLink>
+ 
                                     <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
                             </h:dataTable>

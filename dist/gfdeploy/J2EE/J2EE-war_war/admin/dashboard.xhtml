@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -101,7 +102,8 @@
                     </b:listLinks>
                     <b:listLinks >
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml"/>
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
                         <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
                     </b:listLinks>             
                 </b:column>
@@ -144,12 +146,15 @@
                                     <h:outputText value="#{item.productStatus}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
+                                    <f:facet name ="header">Option</f:facet>
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" >
+                           
+                                    </b:commandButton>                            
                                 </h:column>
                             </h:dataTable>                      
                         </b:row>
+                       
                     </h:form>
                 </b:column>
             </b:row>       

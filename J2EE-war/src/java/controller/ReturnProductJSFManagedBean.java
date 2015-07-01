@@ -18,10 +18,11 @@ import java.util.*;
 @RequestScoped
 public class ReturnProductJSFManagedBean implements Serializable{
 
-    /**
-     * Creates a new instance of ReturnProductJSFManagedBean
-     */
+    public List<ReturnProduct> listReturn = new ArrayList<ReturnProduct>();
+    
+    
     public ReturnProductJSFManagedBean() {
     }
+    
     
 }
