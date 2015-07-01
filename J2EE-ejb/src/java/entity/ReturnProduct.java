@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entity;
 
 import java.io.Serializable;
@@ -11,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Royal
+ * @author blue
  */
 @Entity
 @Table(name = "ReturnProduct")
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReturnProduct.findAll", query = "SELECT r FROM ReturnProduct r"),
     @NamedQuery(name = "ReturnProduct.findByReturnProductID", query = "SELECT r FROM ReturnProduct r WHERE r.returnProductID = :returnProductID"),
+    @NamedQuery(name = "ReturnProduct.findByInvoiceID", query = "SELECT r FROM ReturnProduct r WHERE r.invoiceID = :invoiceID"),
     @NamedQuery(name = "ReturnProduct.findByCustomerName", query = "SELECT r FROM ReturnProduct r WHERE r.customerName = :customerName"),
     @NamedQuery(name = "ReturnProduct.findByCustomerEmail", query = "SELECT r FROM ReturnProduct r WHERE r.customerEmail = :customerEmail"),
     @NamedQuery(name = "ReturnProduct.findByCustomerAddress", query = "SELECT r FROM ReturnProduct r WHERE r.customerAddress = :customerAddress"),
@@ -40,12 +42,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ReturnProduct implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ReturnProduct_ID")
     private Integer returnProductID;
+    @Column(name = "InvoiceID")
+    private Integer invoiceID;
+    @Size(max = 250)
     @Column(name = "CustomerName")
-    private Integer customerName;
+    private String customerName;
     @Size(max = 250)
     @Column(name = "CustomerEmail")
     private String customerEmail;
@@ -77,11 +81,19 @@ public class ReturnProduct implements Serializable {
         this.returnProductID = returnProductID;
     }
 
-    public Integer getCustomerName() {
+    public Integer getInvoiceID() {
+        return invoiceID;
+    }
+
+    public void setInvoiceID(Integer invoiceID) {
+        this.invoiceID = invoiceID;
+    }
+
+    public String getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(Integer customerName) {
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 

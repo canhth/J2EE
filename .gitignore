@@ -229,3 +229,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/J2EE-ejb/nbproject/private/
+/J2EE-war/nbproject/private/
+/nbproject/private/

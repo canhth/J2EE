@@ -103,51 +103,44 @@
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
                         <b:navLink value="Manager Product Return" icon="glyphicon glyphicon-list" href="managedreturnproduct.xhtml" />
-                        <b:navLink value="Manager User" href="manageduser.xhtml" icon="glyphicon glyphicon-user" />  
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />  
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="10" offset="2" styleClass="main" >
-                    <h1>Manager Product</h1>
+                    <h1>Manager User</h1>
                     <h:form>
-                        <b:dropButton look="warning" value="   Choose Category Product   ">
-                            <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
-                                <b:commandButton value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
-                                <br></br>  
-                            </ui:repeat>
-                            <b:commandButton value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
-                        </b:dropButton>
-                        <b:button value="New Product" outcome="addproduct" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>#{' '}
+                        <b:commandButton value="New User" action="#{customerJSFManagedBean.newuser()}" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>
                         <hr/>
                         <b:row styleClass="table-responsive">                         
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.listProducs}" var="item">
+                            <h:dataTable styleClass="table table-striped" value="#{customerJSFManagedBean.allCustomer}" var="item">
                                 <h:column>
                                     <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.productID}" />
+                                    <h:outputText value="#{item.customerID}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                                    <h:outputText value="#{item.productName}" />
+                                    <f:facet name="header"><h:outputText value="Loai" /></f:facet>
+                                    <h:outputText value="#{item.customerType}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Description" /></f:facet>
-                                    <h:outputText value="#{item.productDescription}" />
+                                    <f:facet name="header"><h:outputText value="Ten Nguoi Dung" /></f:facet>
+                                    <h:outputText value="#{item.customerName}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Price" /></f:facet>
-                                    <h:outputText value="#{item.productPrice}" />
+                                    <f:facet name="header"><h:outputText value="Dien Thoai" /></f:facet>
+                                    <h:outputText value="#{item.customerPhone}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Qyantity" /></f:facet>
-                                    <h:outputText value="#{item.productQuantity}" />
+                                    <f:facet name="header"><h:outputText value="Email" /></f:facet>
+                                    <h:outputText value="#{item.customerEmail}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Status" /></f:facet>
-                                    <h:outputText value="#{item.productStatus}" />
+                                    <f:facet name="header"><h:outputText value="Dia Chi" /></f:facet>
+                                    <h:outputText value="#{item.customerAddres}" />
                                 </h:column>
                                 <h:column>
                                     <f:facet name ="header">Tuy chon</f:facet>
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="Update" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="Delete" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="Update" action="#{customerJSFManagedBean.updateCustomer(item)}"></b:commandButton> |
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="Delete" action="#{customerJSFManagedBean.deleteCustomer(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
                             </h:dataTable>                      
                         </b:row>
@@ -157,3 +150,4 @@
         </b:container>                
     </h:body>
 </html>
+

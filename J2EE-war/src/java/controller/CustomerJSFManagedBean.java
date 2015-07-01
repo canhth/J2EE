@@ -23,8 +23,13 @@ import javax.faces.bean.SessionScoped;
 public class CustomerJSFManagedBean implements Serializable{
     @EJB
     private CustomerFacade customerFacade;
+    
+    private Customer cus = new Customer();
+    private boolean isAddnewuser;
 
     public Customer findCustomer = new Customer();
+    
+    public List<Customer> listcustomer;
 
     public Customer getFindCustomer() {
         return findCustomer;
@@ -34,8 +39,22 @@ public class CustomerJSFManagedBean implements Serializable{
         this.findCustomer = findCustomer;
     }
     
+    /**
+     * @return the cus
+     */
+    public Customer getCus() {
+        return cus;
+    }
+
+    /**
+     * @param cus the cus to set
+     */
+    public void setCus(Customer cus) {
+        this.cus = cus;
+    }
     
     public CustomerJSFManagedBean() {
+        isAddnewuser =false;
     }
     public Customer findCustomerByID(Integer idCus)
     {           
@@ -58,5 +77,54 @@ public class CustomerJSFManagedBean implements Serializable{
     {           
         return this.customerFacade.find(order.getCustomerID()).getCustomerAddres();
     }
-    
+    public List<Customer> getallCustomer()
+    {
+        this.listcustomer=this.customerFacade.findAll();
+        return this.listcustomer;
+    }
+    public void deleteCustomer(Customer cus)
+    {
+        this.customerFacade.remove(cus);
+    }
+    public String updateCustomer(Customer cus)
+    {
+        this.cus=cus;
+        return "updateuser";
+    }
+    public String update()
+    {
+        this.customerFacade.edit(this.cus);
+        return "manageduser";
+    }
+    public String newuser()
+    {
+        this.cus.setCustomerAddres("");
+        this.cus.setCustomerEmail("");
+        this.cus.setCustomerName("");
+        this.cus.setCustomerPhone("");
+        this.cus.setCustomerType("");
+        return "adduser";
+    }
+    public String adduser()
+    {
+        this.customerFacade.create(this.cus);
+        setIsAddnewuser(true);
+        return "adduser";
+    }
+
+    /**
+     * @return the isAddnewuser
+     */
+    public boolean isIsAddnewuser() {
+        return isAddnewuser;
+    }
+
+    /**
+     * @param isAddnewuser the isAddnewuser to set
+     */
+    public void setIsAddnewuser(boolean isAddnewuser) {
+        this.isAddnewuser = isAddnewuser;
+    }
+
+   
 }

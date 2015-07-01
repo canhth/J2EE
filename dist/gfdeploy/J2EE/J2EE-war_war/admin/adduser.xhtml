@@ -1,10 +1,8 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -89,8 +87,7 @@
                 </div>
             </h:form>
         </b:navBar>
-
-        <b:container  fluid="true">
+        <b:container fluid="true">
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -105,38 +102,32 @@
                         <b:navLink value="Manager User" href="manageduser.xhtml" icon="glyphicon glyphicon-user" />       
                     </b:listLinks>             
                 </b:column>
-                <b:column  col-sm="6" col-md="10" offset="2" styleClass="main" >
-                    <h1>Manager Category</h1>                  
-                    <h:form > 
-                        <b:panelGrid colSpans="2,10">
-                        <h:outputLabel value="Category Name:" />
-                        <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
-                        </b:panelGrid>
-                        <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
-                    </h:form>
-                    
-                    <hr/>
-                    <b:row styleClass="table-responsive">  
-                        <h:form>
-                            <b:label severity="info" text="List Category"></b:label>
-                            <h:dataTable styleClass="table table-striped" var="item" value="#{categoryJSFManagedBean.allCategory}" >
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.categoryID}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Category Name" /></f:facet>
-                                    <h:outputText value="#{item.categoryName}" />
-                                </h:column>                
-                                <h:column>
-                                    <f:facet name ="header">Type</f:facet>
-                                    <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
-                                </h:column>
-                            </h:dataTable>
-                        </h:form>
-                    </b:row>
+                <b:column col-sm="6" col-md="10" offset="2" styleClass="main">
+                     <b:jumbotron>
+                <h4>Add new User</h4>
+                <b:label text="Recommend type input correctly" /> 
+                <h:form enctype="multipart/form-data;charset=UTF-8"  >   
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Name:" />
+                        <b:inputText span="7" value="#{customerJSFManagedBean.cus.customerName}"  />
+                        <h:outputLabel value="Phone:" />
+                        <b:inputText span="7" value="#{customerJSFManagedBean.cus.customerPhone}" />
+                        <h:outputLabel value="Email:" />
+                        <b:inputText span="7" value="#{customerJSFManagedBean.cus.customerEmail}"/>
+                        <h:outputLabel value="Address:" />
+                        <b:inputText span="7" value="#{customerJSFManagedBean.cus.customerAddres}" />
+                        <h:outputLabel value="Type:" />
+                        <b:inputText span="7" value="#{customerJSFManagedBean.cus.customerType}"/>
+                    </b:panelGrid>                 
+                    <b:commandButton look="primary" value="Save" action="#{customerJSFManagedBean.adduser()}" >
+                        <b:alert rendered="#{customerJSFManagedBean.isAddnewuser == true}" severity="success" closable="true"><strong>Well done!</strong> You successfully add new product.</b:alert>
+                    </b:commandButton>
+                </h:form>
+
+            </b:jumbotron>   
                 </b:column>
-            </b:row>       
-        </b:container>             
+            </b:row>
+        </b:container>   
     </h:body>
 </html>
+

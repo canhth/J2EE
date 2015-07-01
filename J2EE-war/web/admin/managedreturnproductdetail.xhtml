@@ -2,9 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -89,8 +88,7 @@
                 </div>
             </h:form>
         </b:navBar>
-
-        <b:container  fluid="true">
+        <b:container fluid="true">
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -102,41 +100,63 @@
                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Bill" icon="glyphicon glyphicon-usd" />
                         <b:navLink value="Manager Product Return" icon="glyphicon glyphicon-list" href="managedreturnproduct.xhtml" />
-                        <b:navLink value="Manager User" href="manageduser.xhtml" icon="glyphicon glyphicon-user" />       
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
                     </b:listLinks>             
                 </b:column>
-                <b:column  col-sm="6" col-md="10" offset="2" styleClass="main" >
-                    <h1>Manager Category</h1>                  
-                    <h:form > 
-                        <b:panelGrid colSpans="2,10">
-                        <h:outputLabel value="Category Name:" />
-                        <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
-                        </b:panelGrid>
-                        <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
-                    </h:form>
-                    
-                    <hr/>
-                    <b:row styleClass="table-responsive">  
-                        <h:form>
-                            <b:label severity="info" text="List Category"></b:label>
-                            <h:dataTable styleClass="table table-striped" var="item" value="#{categoryJSFManagedBean.allCategory}" >
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.categoryID}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Category Name" /></f:facet>
-                                    <h:outputText value="#{item.categoryName}" />
-                                </h:column>                
-                                <h:column>
-                                    <f:facet name ="header">Type</f:facet>
-                                    <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
-                                </h:column>
-                            </h:dataTable>
-                        </h:form>
-                    </b:row>
+                <b:column col-sm="6" col-md="10" offset="2" styleClass="main">
+                    <b:jumbotron>
+                        <h2>Managed Product Return.</h2>
+                        <b:label severity="danger" text="Recommend type input correctly" />
+                        <h5></h5>
+                    <h:form enctype="multipart/form-data;charset=UTF-8">   
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="InvoiceID:" />
+                        <b:inputText span="8" readonly="true" value=""  />       
+                        <h:outputLabel value="Customer Name:" />
+                        <b:inputText span="8" readonly="true" value=""  />                                 
+                        <h:outputLabel value="Address:" />
+                        <b:inputText span="5" readonly="true" value="" />
+                        <h:outputLabel value="Customer Email:" />
+                        <b:inputText span="5" readonly="true" value=""/>
+                    </b:panelGrid>
+                    <b:commandButton look="primary" value="Check" >
+                    </b:commandButton>
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Reason:" />
+                         <b:inputText span="5"  value=""/>
+                         <h:outputLabel value="Status :" />
+                        <b:selectOneMenu span="5" value="">
+                            <f:selectItem itemValue="Hoan Tat" itemLabel="Da Tra Hang" />
+                            <f:selectItem itemValue="Huy Bo" itemLabel="Huy Tra Hang" />
+                            <f:selectItem itemValue="Cho" itemLabel="Cho Giai Quyet" />
+                        </b:selectOneMenu>
+                    </b:panelGrid>                 
+                    <b:commandButton look="primary" value="Save" >
+                    </b:commandButton>
+                </h:form>               
+            </b:jumbotron>     
+            <h3><b:label severity="info" text="Information of Products." /> </h3>
+            <h:dataTable  styleClass="table table-condensed" var="item" value="" border="1">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="#" /></f:facet>
+                        <h:outputText value="" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Product" /></f:facet>
+                        <h:outputText value="" />                       
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Price" /></f:facet>
+                        <h:outputText value="" ><f:convertNumber pattern="###,###,###,###" /></h:outputText>                       
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Quantity" /></f:facet>
+                        <h:outputText value="" />
+                    </h:column>
+            </h:dataTable>
+            <h2>Tổng tiền:  <b:label text=""></b:label> VNĐ</h2>
                 </b:column>
-            </b:row>       
-        </b:container>             
+            </b:row>
+        </b:container>   
     </h:body>
 </html>

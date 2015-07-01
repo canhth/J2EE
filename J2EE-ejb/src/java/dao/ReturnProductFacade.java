@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dao;
 
 import entity.ReturnProduct;
@@ -13,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Royal
+ * @author blue
  */
 @Stateless
 public class ReturnProductFacade extends AbstractFacade<ReturnProduct> {

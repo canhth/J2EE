@@ -34,9 +34,11 @@ import org.primefaces.model.StreamedContent;
  *
  * @author Royal
  */
-@ManagedBean
+@ManagedBean 
 @SessionScoped
 public class ProductJSFManagedBean implements Serializable{
+    @EJB
+    private CustomerOrderFacade customerOrderFacade;
     @EJB
     private ProductFacade productFacade;
     private boolean isAddNewProductSucsses;
@@ -72,6 +74,8 @@ public class ProductJSFManagedBean implements Serializable{
     }
     
     public List<Product> listProducs;
+    
+    public List<CustomerOrder> customerOrder;
 
     public List<Product> getListProducs() {
         return listProducs;
@@ -206,6 +210,24 @@ public class ProductJSFManagedBean implements Serializable{
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+    public String selectOrderByStatus(int id)
+    {
+        String status = "Cho Duyet Don Hang";
+        switch(id)
+        {
+            case 1: status = "Cho Duyet Don Hang"; 
+                break;
+            case 2: status = "Dang Giao Hang";
+                break;
+            case 3: status = "Hoan Tat";
+                break;
+            case 4: status = "Huy Don Hang";
+                break;
+        }
+        
+        this.customerOrder = customerOrderFacade.findWithQuery("SELECT c FROM CustomerOrder c WHERE c.customerOrderState = '"+status+"'");
+        return "managedOrder";
     }
   
 }

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Project Name</title>
+        <meta name="author" content="The Author"></meta>
+    </h:head>
+    <h:body style="padding: 60px;">
+        <b:navBar brand="Project name" brandHref="#" fixed="top" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="Home" href="index.xhtml"></b:navLink>
+                <b:navLink value="About" href="about.xhtml"></b:navLink>
+                <b:navLink value="Contact" href="#contact"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+         <b:container>
+            <b:jumbotron>
+                <h2>Product Returns</h2>
+                <b:label severity="danger" text="Customer Information" />
+                <h5></h5>
+                <h:form enctype="multipart/form-data;charset=UTF-8">   
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="InvoiceID:" />
+                        <b:inputText span="8" value="#{returnProductJSFManagedBean.invoiceId}"  />       
+                        <h:outputLabel value="Customer Name:" />
+                        <b:inputText span="8" value="#{returnProductJSFManagedBean.customerName}"  />                                 
+                        <h:outputLabel value="Customer Email:" />
+                        <b:inputText span="8" value="#{returnProductJSFManagedBean.customerMail}" />
+                        <h:outputLabel value="Customer Address:" />
+                        <b:inputText span="5" value="#{returnProductJSFManagedBean.customerAddress}"/>
+                    </b:panelGrid>
+                    <b:label severity="danger" text="Product Return Information" />
+                    <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Product Name:" />
+                        <b:inputText span="5" value=""/>
+                        <h:outputLabel value="Quantity:" />
+                        <b:inputText span="5" value=""/>
+                        <b:commandButton look="primary" value="Add" >
+                    </b:commandButton>
+                    </b:panelGrid>
+                    <h2>List Product</h2>
+                    <b:row styleClass="table-responsive">  
+                    <h:form>
+                                <b:column>
+                                    <h:dataTable styleClass="table table-striped" value="" var="item" border="1">
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Product Name" /></f:facet>
+                                            <h:outputText value="" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header"><h:outputText value="Quantity" /></f:facet>
+                                            <h:outputText value="" />
+                                        </h:column>
+                                    </h:dataTable>
+                                </b:column>
+                        </h:form>
+                    </b:row>
+                    <b:commandButton look="primary" value="Send" action="#{returnProductJSFManagedBean.importProductReturn}" >
+                    </b:commandButton>
+                </h:form>               
+            </b:jumbotron>
+        </b:container>   
+    </h:body>
+</html>
+

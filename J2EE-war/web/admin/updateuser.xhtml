@@ -1,10 +1,8 @@
-<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -89,8 +87,7 @@
                 </div>
             </h:form>
         </b:navBar>
-
-        <b:container  fluid="true">
+        <b:container fluid="true">
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
@@ -105,38 +102,21 @@
                         <b:navLink value="Manager User" href="manageduser.xhtml" icon="glyphicon glyphicon-user" />       
                     </b:listLinks>             
                 </b:column>
-                <b:column  col-sm="6" col-md="10" offset="2" styleClass="main" >
-                    <h1>Manager Category</h1>                  
-                    <h:form > 
-                        <b:panelGrid colSpans="2,10">
-                        <h:outputLabel value="Category Name:" />
-                        <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
-                        </b:panelGrid>
-                        <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
-                    </h:form>
-                    
-                    <hr/>
-                    <b:row styleClass="table-responsive">  
-                        <h:form>
-                            <b:label severity="info" text="List Category"></b:label>
-                            <h:dataTable styleClass="table table-striped" var="item" value="#{categoryJSFManagedBean.allCategory}" >
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.categoryID}" />
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header"><h:outputText value="Category Name" /></f:facet>
-                                    <h:outputText value="#{item.categoryName}" />
-                                </h:column>                
-                                <h:column>
-                                    <f:facet name ="header">Type</f:facet>
-                                    <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
-                                </h:column>
-                            </h:dataTable>
-                        </h:form>
-                    </b:row>
+                <b:column col-sm="6" col-md="10" offset="2" styleClass="main">
+                     <b:jumbotron>
+                        <h4>Update User</h4>
+                         Recommend type input correctly
+                         <h:form enctype="multipart/form-data" >   
+                             Ten Nguoi Dung: <b:inputText value="#{customerJSFManagedBean.cus.customerName}"></b:inputText>      
+                             Dien Thoai: <b:inputText value="#{customerJSFManagedBean.cus.customerPhone}"></b:inputText>
+                             Email: <b:inputText value="#{customerJSFManagedBean.cus.customerEmail}"></b:inputText>
+                             Dia Chi: <b:inputText value="#{customerJSFManagedBean.cus.customerAddres}"></b:inputText>        
+                             Loai: <b:inputText value="#{customerJSFManagedBean.cus.customerType}"></b:inputText>
+                             <b:commandButton look="primary" value="Save" action="#{customerJSFManagedBean.update()}" ></b:commandButton>
+                         </h:form>
+                    </b:jumbotron>   
                 </b:column>
-            </b:row>       
-        </b:container>             
+            </b:row>
+        </b:container>   
     </h:body>
 </html>
