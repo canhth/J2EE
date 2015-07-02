@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CustomerOrder.findByCustomerOrderDate", query = "SELECT c FROM CustomerOrder c WHERE c.customerOrderDate = :customerOrderDate"),
     @NamedQuery(name = "CustomerOrder.findByCustomerOrderState", query = "SELECT c FROM CustomerOrder c WHERE c.customerOrderState = :customerOrderState"),
     @NamedQuery(name = "CustomerOrder.findByCustomerOrderPaymentID", query = "SELECT c FROM CustomerOrder c WHERE c.customerOrderPaymentID = :customerOrderPaymentID"),
-    @NamedQuery(name = "CustomerOrder.findByCustomerID", query = "SELECT c FROM CustomerOrder c WHERE c.customerID = :customerID")})
+    @NamedQuery(name = "CustomerOrder.findByCustomerID", query = "SELECT c FROM CustomerOrder c WHERE c.customerID = :customerID"),
+    @NamedQuery(name = "CustomerOrder.findByDiscount", query = "SELECT c FROM CustomerOrder c WHERE c.discount = :discount")})
 public class CustomerOrder implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,6 +55,9 @@ public class CustomerOrder implements Serializable {
     private Integer customerOrderPaymentID;
     @Column(name = "CustomerID")
     private Integer customerID;
+    @Size(max = 50)
+    @Column(name = "Discount")
+    private String discount;
 
     public CustomerOrder() {
     }
@@ -108,6 +112,14 @@ public class CustomerOrder implements Serializable {
 
     public void setCustomerID(Integer customerID) {
         this.customerID = customerID;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 
     @Override

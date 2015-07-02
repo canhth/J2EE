@@ -80,7 +80,7 @@
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
                 <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
-                <b:navLink value="Dashboard" href="#"></b:navLink>
+                <b:navLink value="Dashboard" href="default.xhtml"></b:navLink>
                 <b:navLink value="Settings" href="#"></b:navLink>
                 <b:navLink value="Help" href="#"></b:navLink>
             </b:navbarLinks>
@@ -95,15 +95,16 @@
             <b:row>
                 <b:column col-sm="6" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home" />
+                        <b:navLink  value="Dashboard" href="default.xhtml" icon="glyphicon glyphicon-home" />
                         <b:navLink href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list"/>
                         <b:navLink href="managercategory.xhtml" value="Manager Category"  icon="glyphicon glyphicon-tasks"/>
                     </b:listLinks>
                     <b:listLinks >
                     <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                     <b:navLink value="Manager Invoice" active="true" icon="glyphicon glyphicon-usd" />
-                    <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-usd"  href="managedreturnproduct.xhtml" />
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>         
+                    <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-save"  href="managedreturnproduct.xhtml" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>   
+                        <b:navLink value="Manager Discount" icon="glyphicon glyphicon-tint" href="manageddiscount.xhtml"/>    
                     </b:listLinks>             
                 </b:column>
                 <b:column  col-sm="11" col-md="10" offset="2" styleClass="main" >
@@ -143,7 +144,7 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="State" /></f:facet>
-                                            <h:outputText value="#{item.invoiceState}" />
+                                            <b><h:outputText value="#{item.invoiceState}" /></b>
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"><h:outputText value="Name Customer" /></f:facet>

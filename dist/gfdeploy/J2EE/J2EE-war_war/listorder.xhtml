@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
-        <title>BootsFaces: next-gen JSF Framework</title>
+        <title>Order</title>
         <meta name="author" content="Riccardo Massera"></meta>
     </h:head>
     <h:body style="padding: 60px; min-height: 2000px;">
@@ -16,7 +16,7 @@
             <b:navbarLinks>
                 <b:navLink value="Home" href="index.xhtml"></b:navLink>
                 <b:navLink value="About" href="about.xhtml"></b:navLink>
-    
+
             </b:navbarLinks>
             <b:navbarLinks pull="right">
                 <b:navLink  value="Manager Something" outcome="">
@@ -25,12 +25,11 @@
         </b:navBar>
         <b:container>
             <h1>List Product</h1>
-           
-               <h:form>
+                    <b:button look="primary" value="Back" outcome="index"></b:button>
+            <h:form>
                 <b:label text="List Order:" />
 
                 <h:dataTable styleClass="table table-bordered" rendered="#{productJSFManagedBean.productOrder.size() != 0}" var="item" value="#{productJSFManagedBean.productOrder}" border="1">
-
                     <h:column>
                         <f:facet name="header"><h:outputText value="#" /></f:facet>
                         <h:outputText value="#{item.productID}" />
@@ -61,7 +60,14 @@
                     </h:column>
                 </h:dataTable>
                 <br></br>
-                
+
+                <h3><b:label severity="danger" text="Discount Code" ></b:label></h3> 
+                <b:panelGrid colSpans="2,10">
+                    <b:inputText span="30" value="#{orderJSFManagedBean.objectCustomerOrder.discount}"/>
+
+                </b:panelGrid>               
+                <b:alert rendered="#{orderJSFManagedBean.failDiscount == true}" severity="danger" closable="true"><strong>Oh snap!</strong> Change a few things up and try submitting again. </b:alert>
+                <h3><b:label severity="info" text="Select Payments" ></b:label></h3>
                 <b:selectOneMenu span="5" value="#{orderJSFManagedBean.paymentID}">
                     <f:selectItem itemValue="1" itemLabel="Thanh toan khi nhan hang." />
                     <f:selectItem itemValue="2" itemLabel="Giao dich tai cua hang." />
@@ -69,10 +75,10 @@
                 </b:selectOneMenu>
                 <br></br><br></br><br></br>
                 <b:commandButton size="lg" look="success" value="Check Out" action="#{orderJSFManagedBean.importOrder(productJSFManagedBean.productOrder)}"></b:commandButton>
-                
+
             </h:form>
-            
-            
+
+
         </b:container>
 
 

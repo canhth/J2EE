@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Dashboard Sales</title>   
+        <style type="text/css">
+        .sub-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .navbar-fixed-top {
+            border: 0 none;
+        }
+        .sidebar {
+            display: none;
+        }
+        @media (min-width: 768px) {
+        .sidebar {
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+            bottom: 0;
+            display: block;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px;
+            position: fixed;
+            top: 51px;
+            z-index: 1000;
+        }
+        }
+        .nav-list {
+            margin-bottom: 20px;
+            margin-left: -20px;
+            margin-right: -21px;
+        }
+        .nav-list > li > a {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+            background-color: #428bca;
+            color: #fff;
+        }
+        .main {
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+        .main {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        }
+        .main .page-header {
+            margin-top: 0;
+        }
+        .placeholders {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .placeholders h4 {
+            margin-bottom: 0;
+        }
+        .placeholder {
+            margin-bottom: 20px;
+        }
+        .placeholder img {
+            border-radius: 50%;
+            display: inline-block;
+        }
+        </style>
+    </h:head>
+    <h:body style="padding-top: 60px">
+  
+
+        <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
+            <b:navbarLinks pull="right">               
+                <b:navLink value="Dashboard" href="#"></b:navLink>
+                <b:navLink value="Settings" href="#"></b:navLink>
+                <b:navLink value="Help" href="#"></b:navLink>
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Search..." fieldSize="sm"/>
+                </div>
+            </h:form>
+        </b:navBar>
+
+        <b:container  fluid="true">
+            <b:row>
+                <b:column col-sm="2" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink  value="Dashboard" href="default.xhtml" icon="glyphicon glyphicon-home" />
+                        <b:navLink href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
+                        <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks"/>
+                    </b:listLinks>
+                    <b:listLinks >
+                       <b:navLink value="Manager Order"  icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-save" href="managedreturnproduct.xhtml" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>        
+                        <b:navLink value="Manager Discount" icon="glyphicon glyphicon-tint" href="manageddiscount.xhtml"  active="true"/>    
+                    </b:listLinks>             
+                </b:column>
+                <b:column  col-sm="6" col-md="10" offset="2" styleClass="main" >
+                    <h1>Manager Category</h1>                  
+                    <h:form > 
+                        <b:panelGrid colSpans="2,10">
+                        <h:outputLabel value="Discount code:" />
+                        <b:inputText span="8" value="#{discount.discount.discountString}" />    
+                        <h:outputLabel value="Discount Percent:" />
+                        <b:inputText span="4" value="#{discount.discount.discountPercent}">                        
+                        </b:inputText>
+                        </b:panelGrid>
+                        <p:growl id="growl" life="2000" />                        
+                        <b:commandButton value="New Discount" action="#{discount.addDiscount()}"  size="lg" look="primary"/>
+                    </h:form>
+                    
+                    <hr/>
+                    <b:row styleClass="table-responsive">  
+                        <h:form>
+                            <b:label severity="info" text="List Category"></b:label>
+                            <h:dataTable styleClass="table table-striped" var="item" value="#{discount.getAllDiscount()}" >
+                                <h:column>
+                                    <f:facet name="header"><h:outputText value="#" /></f:facet>
+                                    <h:outputText value="#{item.discountID}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header"><h:outputText value="Discount Code" /></f:facet>
+                                    <h:outputText value="#{item.discountString}" />
+                                </h:column>  
+                                <h:column>
+                                    <f:facet name="header"><h:outputText value="Discount Percent" /></f:facet>
+                                    <h:outputText value="#{item.discountPercent}" />
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name ="header">Type</f:facet>
+                                    <b:commandButton look="warning" value="Xoa" action="#{discount.removeDiscount()}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </b:row>
+                </b:column>
+            </b:row>       
+        </b:container>             
+    </h:body>
+</html>

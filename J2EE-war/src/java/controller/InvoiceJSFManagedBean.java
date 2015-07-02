@@ -27,6 +27,8 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class InvoiceJSFManagedBean implements Serializable {
+    @EJB
+    private CustomerOrderFacade customerOrderFacade;
 
     @EJB
     private InvoiceFacade invoiceFacade;
@@ -64,6 +66,13 @@ public class InvoiceJSFManagedBean implements Serializable {
     public String updateInvoice() {
         try {
             this.invoiceFacade.edit(objectInvoice);
+            if (objectInvoice.getInvoiceState().equals("Invoice already paid"))
+            {
+                CustomerOrder order = new CustomerOrder();
+                order = this.customerOrderFacade.find(objectInvoice.getOrderID());
+                order.setCustomerOrderState("Success");
+                this.customerOrderFacade.edit(order);
+            }
             return "managedinvoice";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not delete Customer ", e.toString()));

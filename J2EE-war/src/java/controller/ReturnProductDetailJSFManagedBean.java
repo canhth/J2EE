@@ -25,12 +25,14 @@ import javax.faces.context.FacesContext;
 @ManagedBean (name="returnProductDetail")
 @RequestScoped
 public class ReturnProductDetailJSFManagedBean implements Serializable{
+    @EJB
+    private ProductFacade productFacade;
     
     @EJB
     private ReturnProductDetailFacade returnProductDetailFacade;
-
+    
     public static List<ReturnProductDetail> listDetail = new ArrayList<ReturnProductDetail>();
- 
+    
     public Integer idProduct;
     public String state;
 
@@ -105,6 +107,15 @@ public class ReturnProductDetailJSFManagedBean implements Serializable{
         try {
             detail.setStatus(state);
             this.returnProductDetailFacade.edit(detail);
+            if (detail.getStatus().equals("Success"))
+            {
+                Product product = new Product();
+                product = this.productFacade.find(detail.getProductID());
+                product.setProductStatus("Waste");
+                product.setProductQuantity(detail.getQuantity());
+                this.productFacade.create(product);
+            }
+            
             return "managedreturnproduct";
         }
         catch (Exception e) {

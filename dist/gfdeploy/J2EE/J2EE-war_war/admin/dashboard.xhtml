@@ -9,79 +9,77 @@
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
-        .sub-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        .navbar-fixed-top {
-            border: 0 none;
-        }
-        .sidebar {
-            display: none;
-        }
-        @media (min-width: 768px) {
-        .sidebar {
-            background-color: #f5f5f5;
-            border-right: 1px solid #eee;
-            bottom: 0;
-            display: block;
-            left: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
-            padding: 20px;
-            position: fixed;
-            top: 51px;
-            z-index: 1000;
-        }
-        }
-        .nav-list {
-            margin-bottom: 20px;
-            margin-left: -20px;
-            margin-right: -21px;
-        }
-        .nav-list > li > a {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
-            background-color: #428bca;
-            color: #fff;
-        }
-        .main {
-            padding: 20px;
-        }
-        @media (min-width: 768px) {
-        .main {
-            padding-left: 40px;
-            padding-right: 40px;
-        }
-        }
-        .main .page-header {
-            margin-top: 0;
-        }
-        .placeholders {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .placeholders h4 {
-            margin-bottom: 0;
-        }
-        .placeholder {
-            margin-bottom: 20px;
-        }
-        .placeholder img {
-            border-radius: 50%;
-            display: inline-block;
-        }
+            .sub-header {
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            .navbar-fixed-top {
+                border: 0 none;
+            }
+            .sidebar {
+                display: none;
+            }
+            @media (min-width: 768px) {
+                .sidebar {
+                    background-color: #f5f5f5;
+                    border-right: 1px solid #eee;
+                    bottom: 0;
+                    display: block;
+                    left: 0;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    padding: 20px;
+                    position: fixed;
+                    top: 51px;
+                    z-index: 1000;
+                }
+            }
+            .nav-list {
+                margin-bottom: 20px;
+                margin-left: -20px;
+                margin-right: -21px;
+            }
+            .nav-list > li > a {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+                background-color: #428bca;
+                color: #fff;
+            }
+            .main {
+                padding: 20px;
+            }
+            @media (min-width: 768px) {
+                .main {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+            }
+            .main .page-header {
+                margin-top: 0;
+            }
+            .placeholders {
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .placeholders h4 {
+                margin-bottom: 0;
+            }
+            .placeholder {
+                margin-bottom: 20px;
+            }
+            .placeholder img {
+                border-radius: 50%;
+                display: inline-block;
+            }
         </style>
     </h:head>
     <h:body style="padding-top: 60px">
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
                 <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
-                <b:navLink value="Dashboard" href="#"></b:navLink>
-                <b:navLink value="Settings" href="#"></b:navLink>
-                <b:navLink value="Help" href="#"></b:navLink>s
+                <b:navLink value="Dashboard" href="default.xhtml"></b:navLink>
             </b:navbarLinks>
             <h:form styleClass="navbar-form navbar-right">
                 <div class="form-group">
@@ -94,29 +92,37 @@
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home"/>
+                        <b:navLink  value="Dashboard" href="default.xhtml" icon="glyphicon glyphicon-home" />
                         <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" active="true"/>
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
                     <b:listLinks >
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml"/>
-                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml" />        
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-save" href="managedreturnproduct.xhtml" />    
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml" />       
+                        <b:navLink value="Manager Discount" icon="glyphicon glyphicon-tint" href="manageddiscount.xhtml"/>    
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="10" offset="2" styleClass="main" >
                     <h1>Manager Product</h1>
                     <hr/>
                     <h:form>
-                        <b:dropButton look="warning" value="   Choose Category Product   ">
-                            <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
-                                <b:commandButton look="info" style="width: 150px;height: 35px" value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
-                                <br></br>  
-                            </ui:repeat>
-                            <b:commandButton look="info" style="width: 150px;height: 35px" value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
-                        </b:dropButton>
-                        <b:button value="New Product" outcome="addproduct" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>#{' '}
+                        <b:row>
+                            <b:dropButton look="warning" value="   Choose Category Product   ">
+                                <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
+                                    <b:commandButton look="info" style="width: 150px;height: 35px" value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
+                                    <br></br>  
+                                </ui:repeat>
+                                <b:commandButton look="info" style="width: 150px;height: 35px" value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
+                            </b:dropButton>
+                            <b:dropButton look="warning" value="   Choose Type Order   ">
+                                <b:commandButton look="info" style="width: 150px;height: 35px" value="In Stock" action="#{productJSFManagedBean.selectProductByStatus(1)}"></b:commandButton>   
+                                <b:commandButton look="info" style="width: 150px;height: 35px" value="Empty Socking" action="#{productJSFManagedBean.selectProductByStatus(2)}" ></b:commandButton>
+                                <b:commandButton look="info" style="width: 150px;height: 35px" value="Waste" action="#{productJSFManagedBean.selectProductByStatus(3)}" ></b:commandButton>                            
+                            </b:dropButton>
+                            <b:button value="New Product" outcome="addproduct" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>#{''}
+                        </b:row>
                         <hr/>
                         <li><b:label severity="info" text="List Product"></b:label></li>
                         <b:row styleClass="table-responsive">                         
@@ -149,12 +155,12 @@
                                     <f:facet name ="header">Option</f:facet>
                                     <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
                                     <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" >
-                           
+
                                     </b:commandButton>                            
                                 </h:column>
                             </h:dataTable>                      
                         </b:row>
-                       
+
                     </h:form>
                 </b:column>
             </b:row>       

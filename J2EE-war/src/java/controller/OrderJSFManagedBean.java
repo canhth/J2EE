@@ -16,7 +16,7 @@ import javax.ejb.EJB;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import utils.SendEmail;
 
@@ -25,8 +25,11 @@ import utils.SendEmail;
  * @author Royal
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class OrderJSFManagedBean implements Serializable {
+
+    @EJB
+    private DiscountFacade discountFacade;
 
     @EJB
     private InvoiceDetailFacade invoiceDetailFacade;
@@ -44,6 +47,11 @@ public class OrderJSFManagedBean implements Serializable {
     private Integer paymentID;
 
     private boolean isUpdateOrder;
+    private boolean failDiscount;
+
+    public boolean isFailDiscount() {
+        return failDiscount;
+    }
 
     public boolean isIsUpdateOrder() {
         return isUpdateOrder;
@@ -80,6 +88,7 @@ public class OrderJSFManagedBean implements Serializable {
     }
 
     public OrderJSFManagedBean() {
+        failDiscount = false;
     }
 
     public String importOrder(List<Product> productList) {
@@ -90,10 +99,28 @@ public class OrderJSFManagedBean implements Serializable {
             newCustomerOrder.setCustomerID(LoginJSFManagedBean.customer.getCustomerID());
             newCustomerOrder.setCustomerOrderDate(dateFormat.format(cal.getTime()));
             newCustomerOrder.setCustomerOrderName("Mua Hang");
-            newCustomerOrder.setCustomerOrderState("Cho Duyet Don Hang");
+            newCustomerOrder.setCustomerOrderState("Waiting");
             newCustomerOrder.setCustomerOrderPaymentID(this.paymentID);
+            
+            if (!objectCustomerOrder.getDiscount().isEmpty()) {
+                try {
+                    List<Discount> listDiscount = this.discountFacade.findAll();
+                    boolean isTrue = true;
+                    for (Discount discount : listDiscount) {
+                        if (discount.getDiscountString().equals(objectCustomerOrder.getDiscount())) {
+                            newCustomerOrder.setDiscount(discount.getDiscountString());                       
+                            isTrue = false;
+                        } 
+                    }
+                    this.failDiscount = isTrue;                 
+                } catch (RuntimeException e) {
+                    failDiscount = true;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Discount Code wrong", "Please type correctly code! ."));
+                    //return "listorder";
+                }
+            } 
+            
             this.customerOrderFacade.create(newCustomerOrder);
-
             for (Product product : productList) {
                 CustomerOrderDetail orderDetails = new CustomerOrderDetail();
                 orderDetails.setCustomerOrderID(newCustomerOrder.getCustomerOrderID());
@@ -136,18 +163,27 @@ public class OrderJSFManagedBean implements Serializable {
             Invoice invoice = new Invoice();
             InvoiceDetail invoiceDetail = new InvoiceDetail();
             List<CustomerOrderDetail> listOrderDetail = this.customerOrderDetailFacade.findWithQuery("SELECT c FROM CustomerOrderDetail c WHERE c.customerOrderID = '" + objectCustomerOrder.getCustomerOrderID() + "'");
-            if (status.equals("Dang Giao Hang")) {
+            if (status.equals("On Delivery")) {
                 Calendar cal = Calendar.getInstance();
                 invoice.setCustomerID(objectCustomerOrder.getCustomerID());
                 invoice.setInvoiceDate(cal.getTime());
                 invoice.setInvoiceName("Invoice of Sale");
                 invoice.setInvoicePaymentID(objectCustomerOrder.getCustomerOrderPaymentID());
                 invoice.setInvoiceState("Invoice not paid");
-                Integer charge = 0;
+                float charge = 0;
                 for (CustomerOrderDetail productOrder : listOrderDetail) {
                     charge += productOrder.getPrice() * productOrder.getQuantity();
                 }
-                invoice.setInvoiceCost(charge);
+                if (!objectCustomerOrder.getDiscount().isEmpty()) {
+                    List<Discount> listDiscount = this.discountFacade.findAll();
+                    for (Discount discount : listDiscount) {
+                        if (discount.getDiscountString().equals(objectCustomerOrder.getDiscount())) {                 
+                            charge = charge - (charge * discount.getDiscountPercent() / 100);
+                        } 
+                    }                   
+                }
+                
+                invoice.setInvoiceCost((int) charge);
                 invoice.setOrderID(objectCustomerOrder.getCustomerOrderID());
 
                 this.invoiceFacade.create(invoice);
@@ -158,8 +194,7 @@ public class OrderJSFManagedBean implements Serializable {
                     invoiceDetail.setQuantity(orderDetail.getQuantity());
                     this.invoiceDetailFacade.create(invoiceDetail);
                 }
-
-            } else if (status.equals("Huy Bo")) {
+            } else if (status.equals("Cancel")) {
                 try {
                     for (CustomerOrderDetail orderDetail : listOrderDetail) {
                         this.customerOrderDetailFacade.remove(orderDetail);
@@ -171,7 +206,6 @@ public class OrderJSFManagedBean implements Serializable {
                     return "managedOrder?faces-redirect=true";
                 }
             }
-
             this.isUpdateOrder = true;
             return "managedOrder?faces-redirect=true";
 
@@ -184,19 +218,19 @@ public class OrderJSFManagedBean implements Serializable {
     /*  Chon Loai Don Hang */
     public String selectOrderByStatus(int id) {
 
-        String status = "Cho Duyet Don Hang";
+        String status = "Waiting";
         switch (id) {
             case 1:
-                status = "Cho Duyet Don Hang";
+                status = "Waiting";
                 break;
             case 2:
-                status = "Dang Giao Hang";
+                status = "On Delivery";
                 break;
             case 3:
-                status = "Hoan Tat";
+                status = "Success";
                 break;
             case 4:
-                status = "Huy Don Hang";
+                status = "Cancel";
                 break;
         }
         try {

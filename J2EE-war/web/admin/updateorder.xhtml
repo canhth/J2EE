@@ -85,15 +85,16 @@
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home"/>
+                        <b:navLink  value="Dashboard" href="default.xhtml" icon="glyphicon glyphicon-home" />
                         <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
                     <b:listLinks >
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" active="true"/>
                         <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
-                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>        
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-save" href="managedreturnproduct.xhtml" />    
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>    
+                        <b:navLink value="Manager Discount" icon="glyphicon glyphicon-tint" href="manageddiscount.xhtml"/>    
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="10" offset="2" styleClass="main" >
@@ -115,9 +116,9 @@
                             <b:inputText span="5" readonly="true" value="#{paymentJSFManagedBean.findPaymentName(orderJSFManagedBean.objectCustomerOrder.customerOrderPaymentID)}"/>
                             <h:outputLabel value="Trang Thai:" />
                             <b:selectOneMenu span="5" value="#{orderJSFManagedBean.objectCustomerOrder.customerOrderState}">
-                                <f:selectItem itemValue="Dang Giao Hang" itemLabel="Bat Dau Giao Hang" />
-                                <f:selectItem itemValue="Hoan Tat" itemLabel="Da Thanh Toan Khi Nhan Hang" />
-                                <f:selectItem itemValue="Huy Bo" itemLabel="Huy Bo Don Hang" />
+                                <f:selectItem itemValue="On Delivery" itemLabel="Bat Dau Giao Hang" />
+                                <f:selectItem itemValue="Success" itemLabel="Da Thanh Toan Khi Nhan Hang" />
+                                <f:selectItem itemValue="Cancel" itemLabel="Huy Bo Don Hang" />
                             </b:selectOneMenu>
                         </b:panelGrid>                 
                         <b:commandButton look="primary" value="Save Order" action="#{orderJSFManagedBean.updateOrder()}">

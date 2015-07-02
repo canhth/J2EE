@@ -7,12 +7,15 @@
 package controller;
 
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
+import static controller.OrderJSFManagedBean.objectCustomerOrder;
 import dao.*;
 import entity.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -113,7 +116,9 @@ public class ProductJSFManagedBean implements Serializable{
     }
     
     public String addProduct()
-    {         
+    { 
+        Calendar cal = Calendar.getInstance();
+        this.sp.setProductProductionDate(cal.getTime());
         this.productFacade.create(this.sp);
         isAddNewProductSucsses = true;
         return "addproduct";
@@ -180,11 +185,17 @@ public class ProductJSFManagedBean implements Serializable{
         return "index?faces-redirect=true";
     }
     
-   
+    
     
     public String findProductNameByID(int productID)
     {
-        return this.productFacade.find(productID).getProductName();
+        try {
+            String name = this.productFacade.find(productID).getProductName();
+            return name;
+        } catch (Exception e){
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not update Invoice (Cause this order not have a Invoice)", e.toString()));
+         return "Product Not Found.";   
+        }
     }
     
     public String findProductByCategory(int id)
@@ -192,30 +203,31 @@ public class ProductJSFManagedBean implements Serializable{
         this.listProducs = productFacade.findWithQuery("SELECT p FROM Product p WHERE p.productCategoryID = '"+id+"'");
         return "dashboard";
     }
-    
-    /*File Upload*/
-    private UploadedFile file;
- 
-    public UploadedFile getFile() {
-        return file;
-    }
- 
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
-     
-    public void upload() {
-        if(file != null) {
-            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+    public String selectProductByStatus(int id) {
+
+        String status = "In Stock";
+        switch (id) {
+            case 1:
+                status = "In Stock";
+                break;
+            case 2:
+                status = "Empty Stocking";
+                break;
+            case 3:
+                status = "Waste";
+                break;
         }
+        try {
+            this.listProducs = productFacade.findWithQuery("SELECT p FROM Product p WHERE p.productStatus = '" + status + "'");
+            return "dashboard";
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not update Invoice (Cause this order not have a Invoice)", e.toString()));
+            return "dashboard";
+        }
+
     }
-    public void destroyWorld() {
-        addMessage("System Error", "Please try again later.");
-    }
-     
-    public void addMessage(String summary, String detail) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+    
+   
+    
 }

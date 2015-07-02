@@ -95,15 +95,16 @@
             <b:row>
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
-                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home" />
+                        <b:navLink  value="Dashboard" href="default.xhtml" icon="glyphicon glyphicon-home" />
                         <b:navLink href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" active="true"/>
                     </b:listLinks>
                     <b:listLinks >
                        <b:navLink value="Manager Order"  icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
-                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-usd" href="managedreturnproduct.xhtml" />
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>        
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-save" href="managedreturnproduct.xhtml" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>     
+                        <b:navLink value="Manager Discount" icon="glyphicon glyphicon-tint" href="manageddiscount.xhtml"/>    
                     </b:listLinks>             
                 </b:column>
                 <b:column  col-sm="6" col-md="10" offset="2" styleClass="main" >
@@ -114,9 +115,7 @@
                         <b:inputText span="8" value="#{categoryJSFManagedBean.categoryName}" />                           
                         </b:panelGrid>
                         <p:growl id="growl" life="2000" />
-                        <p:commandLink id="ajax" update="growl" actionListener="#{categoryJSFManagedBean.insertCategory()}">
-                            <h:outputText value="Ajax Submit" />
-                        </p:commandLink>
+                        
                         <b:commandButton value="New Category" action="#{categoryJSFManagedBean.insertCategory()}"  size="lg" look="primary"/>
                     </h:form>
                     
@@ -134,12 +133,7 @@
                                     <h:outputText value="#{item.categoryName}" />
                                 </h:column>                
                                 <h:column>
-                                    <f:facet name ="header">Type</f:facet>
-                                    <p:growl id="growl" life="2000" />
-                                    <p:commandLink id="ajax" update="growl" actionListener="#{categoryJSFManagedBean.deleteCategory(item)}">
-                                        <h:outputText value="Ajax Submit" />
-                                    </p:commandLink>
- 
+                                    <f:facet name ="header">Type</f:facet>                                
                                     <b:commandButton look="warning" value="Xoa" action="#{categoryJSFManagedBean.deleteCategory(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
                             </h:dataTable>
