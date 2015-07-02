@@ -4,8 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Dashboard Sales</title>   
         <style type="text/css">
@@ -76,6 +75,8 @@
         </style>
     </h:head>
     <h:body style="padding-top: 60px">
+
+
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
                 <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
@@ -95,66 +96,54 @@
                 <b:column col-sm="2" col-md="2" styleClass="sidebar">
                     <b:listLinks>
                         <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home"/>
-                        <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" active="true"/>
+                        <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
                     <b:listLinks >
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
-                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml"/>
-                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml" />        
+                        <b:navLink value="Manager Invoices" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
+                        <b:navLink value="Manager Product Return" icon="glyphicon glyphicon-list" href="managedreturnproduct.xhtml" />
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml" active="true"/>  
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="10" offset="2" styleClass="main" >
-                    <h1>Manager Product</h1>
-                    <hr/>
+                    <h1>Manager User</h1>
                     <h:form>
-                        <b:dropButton look="warning" value="   Choose Category Product   ">
-                            <ui:repeat value="#{categoryJSFManagedBean.listCategory}" var="itemCategory">
-                                <b:commandButton look="info" style="width: 150px;height: 35px" value="#{itemCategory.categoryName}" action="#{productJSFManagedBean.findProductByCategory(itemCategory.categoryID)}"/>
-                                <br></br>  
-                            </ui:repeat>
-                            <b:commandButton look="info" style="width: 150px;height: 35px" value="All Product" action="#{productJSFManagedBean.danhsach()}"/>
-                        </b:dropButton>
-                        <b:button value="New Product" outcome="addproduct" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>#{' '}
+                        <b:commandButton value="New User" action="#{customerJSFManagedBean.newuser()}" icon="glyphicon glyphicon-plus" iconAlign="right" size="xm" look="primary"/>
                         <hr/>
-                        <li><b:label severity="info" text="List Product"></b:label></li>
                         <b:row styleClass="table-responsive">                         
-                            <h:dataTable styleClass="table table-striped" value="#{productJSFManagedBean.listProducs}" var="item">
+                            <h:dataTable styleClass="table table-striped" value="#{customerJSFManagedBean.allCustomer}" var="item">
                                 <h:column>
                                     <f:facet name="header"><h:outputText value="#" /></f:facet>
-                                    <h:outputText value="#{item.productID}" />
+                                    <h:outputText value="#{item.customerID}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Name" /></f:facet>
-                                    <h:outputText value="#{item.productName}" />
+                                    <f:facet name="header"><h:outputText value="Loai" /></f:facet>
+                                    <h:outputText value="#{item.customerType}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Description" /></f:facet>
-                                    <h:outputText value="#{item.productDescription}" />
+                                    <f:facet name="header"><h:outputText value="Ten Nguoi Dung" /></f:facet>
+                                    <h:outputText value="#{item.customerName}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Price" /></f:facet>
-                                    <h:outputText value="#{item.productPrice}" />
+                                    <f:facet name="header"><h:outputText value="Dien Thoai" /></f:facet>
+                                    <h:outputText value="#{item.customerPhone}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Qyantity" /></f:facet>
-                                    <h:outputText value="#{item.productQuantity}" />
+                                    <f:facet name="header"><h:outputText value="Email" /></f:facet>
+                                    <h:outputText value="#{item.customerEmail}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name="header"><h:outputText value="Status" /></f:facet>
-                                    <h:outputText value="#{item.productStatus}" />
+                                    <f:facet name="header"><h:outputText value="Dia Chi" /></f:facet>
+                                    <h:outputText value="#{item.customerAddres}" />
                                 </h:column>
                                 <h:column>
-                                    <f:facet name ="header">Option</f:facet>
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="" action="#{productJSFManagedBean.updateProduct(item)}"></b:commandButton> |
-                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="" action="#{productJSFManagedBean.deleteProduct(item)}" onclick="return confirm('Are you sure?')" >
-                           
-                                    </b:commandButton>                            
+                                    <f:facet name ="header">Tuy chon</f:facet>
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-list-alt" look="info" value="Update" action="#{customerJSFManagedBean.updateCustomer(item)}"></b:commandButton> |
+                                    <b:commandButton iconAlign="right" icon="glyphicon glyphicon-trash" look="warning" value="Delete" action="#{customerJSFManagedBean.deleteCustomer(item)}" onclick="return confirm('Are you sure?')" ></b:commandButton>                            
                                 </h:column>
                             </h:dataTable>                      
                         </b:row>
-                       
                     </h:form>
                 </b:column>
             </b:row>       

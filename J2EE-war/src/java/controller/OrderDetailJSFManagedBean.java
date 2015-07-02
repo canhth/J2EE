@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -55,12 +56,17 @@ public class OrderDetailJSFManagedBean implements Serializable{
         
     }
     
-    public List<CustomerOrderDetail> getAllOrderDetail()
-    {
-        CustomerOrder order = new CustomerOrder();
-        order = OrderJSFManagedBean.objectCustomerOrder;
-        this.listOrderDetail = this.customerOrderDetailFacade.findWithQuery("SELECT c FROM CustomerOrderDetail c WHERE c.customerOrderID = '"+order.getCustomerOrderID()+"'");
-        return this.listOrderDetail;
+    public List<CustomerOrderDetail> getAllOrderDetail() {
+
+        try {
+            CustomerOrder order = new CustomerOrder();
+            order = OrderJSFManagedBean.objectCustomerOrder;
+            this.listOrderDetail = this.customerOrderDetailFacade.findWithQuery("SELECT c FROM CustomerOrderDetail c WHERE c.customerOrderID = '" + order.getCustomerOrderID() + "'");
+            return this.listOrderDetail;
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not delete Customer ", e.toString()));
+            return this.listOrderDetail;
+        }      
     }
     
     public String countCharge(List<CustomerOrderDetail> orderDetailList)
@@ -76,10 +82,15 @@ public class OrderDetailJSFManagedBean implements Serializable{
     }
     
     public String updateColumnOrderDetail(CustomerOrderDetail orderDetail)
-    {   
-        orderDetail.setQuantity(this.quantity);
-        this.customerOrderDetailFacade.edit(orderDetail);
-        return "managedOrder";
+    {    
+        try {
+            orderDetail.setQuantity(this.quantity);
+            this.customerOrderDetailFacade.edit(orderDetail);
+            return "managedOrder";
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not delete Customer ", e.toString()));
+            return "managedOrder";
+        }
     }
     public String deleteOrderDetail(CustomerOrderDetail orderDetail)
     {

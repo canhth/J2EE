@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/src/java/controller/OrderDetailJSFManagedBean.java</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/src/java/controller/ReturnProductJSFManagedBean.java</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/managedreturnproductdetail.xhtml</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/managedinvoice.xhtml</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/managedOrder.xhtml</file>
             <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/updateinvoice.xhtml</file>
-            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/updateorder.xhtml</file>
-            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/src/java/controller/InvoiceDetailJSFManagedBean.java</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/src/java/controller/ReturnProductDetailJSFManagedBean.java</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/src/java/controller/ProductJSFManagedBean.java</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/default.xhtml</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/dashboard.xhtml</file>
+            <file>file:/C:/Users/ád/Documents/GitHub/J2EE/J2EE-war/web/admin/managedreturnproduct.xhtml</file>
         </group>
     </open-files>
 </project-private>

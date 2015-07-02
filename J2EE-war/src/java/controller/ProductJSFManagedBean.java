@@ -132,18 +132,20 @@ public class ProductJSFManagedBean implements Serializable{
     }  
     
     /* Add product to Order */
-    
-    public String createOderDetail(Product product)
-    {
-        if(LoginJSFManagedBean.customer != null)
-        {
-           this.sp = product;
-           product.setProductQuantity(1);
-           this.productOrder.add(product);
-           return "index";
+    public String createOderDetail(Product product) {
+        try {
+            if (LoginJSFManagedBean.customer != null) {
+                this.sp = product;
+                product.setProductQuantity(1);
+                this.productOrder.add(product);
+                return "index";
+            } else {
+                return "login?faces-redirect=true";
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not delete Customer ", e.toString()));
+            return "index";
         }
-        else 
-            return "login?faces-redirect=true";
     }
     
     public void clear(Product product)

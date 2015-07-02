@@ -15,7 +15,7 @@ import javax.ejb.EJB;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
  * @author Royal
  */
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class LoginJSFManagedBean implements Serializable {
 
     @EJB
@@ -105,7 +105,11 @@ public class LoginJSFManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can't login", "Please enter correct username and Password"));
             throw new FacesException(e.getMessage(), e);
         }
-
     }
 
+    public String logOut()
+    {
+        customer = null;
+        return "index?faces-redirect=true";
+    }
 }

@@ -8,9 +8,6 @@
         <meta name="author" content="The Author"></meta>
     </h:head>
     <h:body style="padding: 60px;">
-        <h:form prependId="false">
-            <h3>Cross-site request forgery protection</h3>
-        </h:form>
         <b:navBar brand="Sales and Distribution" brandHref="#" fixed="top" inverse="true">
             <b:navbarLinks>
                 <b:navLink value="Home" href="#"></b:navLink>
@@ -19,11 +16,11 @@
             </b:navbarLinks>
         </b:navBar>
         <b:container>
-            <h2><b:alert severity="success" closable="true"><strong>Well done!</strong> Your order is being considered.</b:alert></h2>
-            <h4>#{' We just send to you email about infomation of your Order. Please check content and contact us if you have any question. '}</h4>
+            <h2><b:alert severity="success" closable="true"><strong>Well done!</strong> Your return product is being considered.</b:alert></h2>
+            <h4>#{' We just send to you email about infomation of your Return Products. Please check content and contact us if you have any question. '}</h4>
         </b:container>
         <h:form>
-        <b:commandButton tooltip-position="auto right" size="lg" value="Back Home"  action="#{productJSFManagedBean.backIndex()}" look="primary"/>#{' Click here back to index. '}
+            <b:commandButton tooltip-position="auto right" size="lg" value="Back Home"  action="#{returnProductDetail.backIndex()}" look="primary"/>#{' Click here back to index. '}
         </h:form>
     </h:body>
 </html>

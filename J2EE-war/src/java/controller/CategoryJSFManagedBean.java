@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
+import static controller.OrderJSFManagedBean.objectCustomerOrder;
 import dao.*;
 import entity.*;
 import java.io.Serializable;
@@ -23,11 +23,11 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class CategoryJSFManagedBean implements Serializable{
-    
+public class CategoryJSFManagedBean implements Serializable {
+
     @EJB
     private CategoryFacade categoryFacade;
-    
+
     private String categoryName;
 
     public String getCategoryName() {
@@ -38,8 +38,6 @@ public class CategoryJSFManagedBean implements Serializable{
         this.categoryName = categoryName;
     }
 
-    
-  
     private List<Category> listCategory = new ArrayList<Category>();
 
     public List<Category> getListCategory() {
@@ -49,41 +47,40 @@ public class CategoryJSFManagedBean implements Serializable{
     public void setListCategory(List<Category> listCategory) {
         this.listCategory = listCategory;
     }
-    
+
     public CategoryJSFManagedBean() {
-   
+
     }
-    
-    public List<Category> getAllCategory()
-    {
+
+    public List<Category> getAllCategory() {
         return this.categoryFacade.findAll();
     }
-  
-    public String insertCategory( )
-    {
+
+    public String insertCategory() {
         Category newCategory = new Category();
-        newCategory.setCategoryName(categoryName);
-        this.categoryFacade.create(newCategory);
-      /*  else 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not insert new Category.", "Please enter correct Category Name."));*/
+        try {
+            newCategory.setCategoryName(categoryName);
+            this.categoryFacade.create(newCategory);
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Can not update Invoice (Cause this order not have a Invoice)", e.toString()));
+            return "managercategory";
+        }
         return "managercategory";
     }
- 
-    public boolean updateCategory( Category category)
-    {
-    
+
+    public boolean updateCategory(Category category) {
+
         return true;
     }
-       
-    public String deleteCategory(Category category)
-    {       
-        this.categoryFacade.remove(category);       
+
+    public String deleteCategory(Category category) {
+        this.categoryFacade.remove(category);
         return "managercategory";
     }
-    
+
     @PostConstruct
-    public void init()
-    {
+    public void init() {
         this.listCategory = categoryFacade.findAll();
-    } 
+    }
 }

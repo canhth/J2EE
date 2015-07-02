@@ -76,8 +76,6 @@
         </style>
     </h:head>
     <h:body style="padding-top: 60px">
-
-
         <b:navBar brand="Sale and Distribution" brandHref="#" inverse="true" fixed="top" fluid="true">
             <b:navbarLinks pull="right">
                 <b:navLink value="Hi #{loginJSFManagedBean.customer.customerName}" rendered="#{loginJSFManagedBean.customer.customerName != null}"></b:navLink>
@@ -100,11 +98,11 @@
                         <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
                         <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
                     </b:listLinks>
-                    <b:listLinks >
+                    <b:listLinks>
                         <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" />
                         <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" active="true"/>
                         <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
-                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" />        
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>        
                     </b:listLinks>             
                 </b:column>
                 <b:column col-md="11" offset="2" styleClass="main" >

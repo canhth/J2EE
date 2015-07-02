@@ -19,7 +19,7 @@
                 <b:navLink value="About" href="faces/about.xhtml"></b:navLink>
                 <b:navLink value="Contact" href="faces/admin/managedOrder.xhtml"></b:navLink>
                 <b:dropMenu value="Dropdown">
-                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Product Return" href="faces/productreturn.xhtml"></b:navLink>
                     <b:navLink value="Another action" href="#"></b:navLink>
                     <b:navLink value="Something else here" href="#"></b:navLink>
                     <b:navLink></b:navLink>
@@ -41,7 +41,11 @@
                     </div>
                     <b:commandButton  action="#{loginJSFManagedBean.checkLoginManager()}"  value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
                 </h:form>
-                <b:label rendered="#{loginJSFManagedBean.username != null}" text="Well come #{loginJSFManagedBean.customer.customerName}" severity="info"/>
+                <h:form>
+                    <b:label rendered="#{loginJSFManagedBean.customer != null}" text="Well come #{loginJSFManagedBean.customer.customerName}" severity="info"/>
+                    <b:commandButton look="danger" rendered="#{loginJSFManagedBean.customer != null}" action="#{loginJSFManagedBean.logOut()}" value="Log Out"></b:commandButton>
+                </h:form>
+                
             </b:navbarLinks>
         </b:navBar>
         <b:container>

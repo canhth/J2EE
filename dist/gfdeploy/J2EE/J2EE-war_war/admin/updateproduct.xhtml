@@ -8,6 +8,72 @@
     <h:head>
         <title>Project Name</title>
         <meta name="author" content="The Author"></meta>
+        <style type="text/css">
+            .sub-header {
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            .navbar-fixed-top {
+                border: 0 none;
+            }
+            .sidebar {
+                display: none;
+            }
+            @media (min-width: 768px) {
+                .sidebar {
+                    background-color: #f5f5f5;
+                    border-right: 1px solid #eee;
+                    bottom: 0;
+                    display: block;
+                    left: 0;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    padding: 20px;
+                    position: fixed;
+                    top: 51px;
+                    z-index: 1000;
+                }
+            }
+            .nav-list {
+                margin-bottom: 20px;
+                margin-left: -20px;
+                margin-right: -21px;
+            }
+            .nav-list > li > a {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+                background-color: #428bca;
+                color: #fff;
+            }
+            .main {
+                padding: 20px;
+            }
+            @media (min-width: 768px) {
+                .main {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
+            }
+            .main .page-header {
+                margin-top: 0;
+            }
+            .placeholders {
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .placeholders h4 {
+                margin-bottom: 0;
+            }
+            .placeholder {
+                margin-bottom: 20px;
+            }
+            .placeholder img {
+                border-radius: 50%;
+                display: inline-block;
+            }
+        </style>
     </h:head>
     <h:body style="padding: 60px;">
         <b:navBar brand="Sale and Distribution" brandHref="#" fixed="top" inverse="true">
@@ -16,25 +82,44 @@
             </b:navbarLinks>
         </b:navBar>
         <b:container>
-            <b:jumbotron>
-                  <b:button size="sm" value="Back" outcome="dashboard" look="primary"/>
-                <h4>Update new Product</h4>
-                 Recommend type input correctly
-                 <h:form enctype="multipart/form-data" >   
-                     Ten San Pham: <b:inputText value="#{productJSFManagedBean.sp.productName}"></b:inputText>      
-                     Gia San Pham: <b:inputText value="#{productJSFManagedBean.sp.productPrice}"></b:inputText>
-                     So Luong: <b:inputText value="#{productJSFManagedBean.sp.productQuantity}"></b:inputText>
-                     Thong Tin: <b:inputText value="#{productJSFManagedBean.sp.productDescription}"></b:inputText>        
-                     Tinh Trang: <b:inputText value="#{productJSFManagedBean.sp.productStatus}"></b:inputText>    
+            <b:row>
+                <b:column col-sm="2" col-md="2" styleClass="sidebar">
+                    <b:listLinks>
+                        <b:navLink header="Dasboard Links" icon="glyphicon glyphicon-home"/>
+                        <b:navLink  href="dashboard.xhtml" value="Manager Products" icon="glyphicon glyphicon-list" />
+                        <b:navLink href="managercategory.xhtml" value="Manager Category" icon="glyphicon glyphicon-tasks" />
+                    </b:listLinks>
+                    <b:listLinks >
+                        <b:navLink value="Manager Order" icon="glyphicon glyphicon-shopping-cart" href="managedOrder.xhtml" active="true"/>
+                        <b:navLink value="Manager Invoice" icon="glyphicon glyphicon-usd" href="managedinvoice.xhtml" />
+                        <b:navLink value="Manager Return Product" icon="glyphicon glyphicon-user" href="managedreturnproduct.xhtml" />    
+                        <b:navLink value="Manager User" icon="glyphicon glyphicon-user" href="manageduser.xhtml"/>        
+                    </b:listLinks>             
+                </b:column>
+                <b:column col-md="10" offset="2" styleClass="main" >
 
-                     <b:selectOneMenu span="5" value="#{productJSFManagedBean.sp.productCategoryID}">
+                    <b:button size="sm" value="Back" outcome="dashboard" look="primary"/>
+                    <h4>Update new Product</h4>
+                    Recommend type input correctly
+                    <h:form enctype="multipart/form-data" >   
+                        Ten San Pham: <b:inputText value="#{productJSFManagedBean.sp.productName}"></b:inputText>      
+                        Gia San Pham: <b:inputText value="#{productJSFManagedBean.sp.productPrice}"></b:inputText>
+                        So Luong: <b:inputText value="#{productJSFManagedBean.sp.productQuantity}"></b:inputText>
+                        Thong Tin: <b:inputText value="#{productJSFManagedBean.sp.productDescription}"></b:inputText>        
+                        Tinh Trang: <b:inputText value="#{productJSFManagedBean.sp.productStatus}"></b:inputText>    
+
+                        <b:selectOneMenu span="5" value="#{productJSFManagedBean.sp.productCategoryID}">
                             <f:selectItem itemValue="1" itemLabel="Dien Thoai" />
                             <f:selectItem itemValue="2" itemLabel="May Tinh" />
                             <f:selectItem itemValue="3" itemLabel="Gia Dung" />
                         </b:selectOneMenu>
-                     <b:commandButton look="primary" value="Save" action="#{productJSFManagedBean.update()}" ></b:commandButton>
-                 </h:form>
-            </b:jumbotron>     
+                        <b:commandButton look="primary" value="Save" action="#{productJSFManagedBean.update()}" ></b:commandButton>
+                    </h:form>
+
+                </b:column>
+
+
+            </b:row>
         </b:container>   
     </h:body>
 </html>

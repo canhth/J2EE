@@ -33,20 +33,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReturnProduct.findAll", query = "SELECT r FROM ReturnProduct r"),
     @NamedQuery(name = "ReturnProduct.findByReturnProductID", query = "SELECT r FROM ReturnProduct r WHERE r.returnProductID = :returnProductID"),
-    @NamedQuery(name = "ReturnProduct.findByCustomerName", query = "SELECT r FROM ReturnProduct r WHERE r.customerName = :customerName"),
     @NamedQuery(name = "ReturnProduct.findByCustomerEmail", query = "SELECT r FROM ReturnProduct r WHERE r.customerEmail = :customerEmail"),
     @NamedQuery(name = "ReturnProduct.findByCustomerAddress", query = "SELECT r FROM ReturnProduct r WHERE r.customerAddress = :customerAddress"),
     @NamedQuery(name = "ReturnProduct.findByDayReturn", query = "SELECT r FROM ReturnProduct r WHERE r.dayReturn = :dayReturn"),
     @NamedQuery(name = "ReturnProduct.findByReturnReason", query = "SELECT r FROM ReturnProduct r WHERE r.returnReason = :returnReason"),
-    @NamedQuery(name = "ReturnProduct.findByReturnStatus", query = "SELECT r FROM ReturnProduct r WHERE r.returnStatus = :returnStatus")})
+    @NamedQuery(name = "ReturnProduct.findByReturnStatus", query = "SELECT r FROM ReturnProduct r WHERE r.returnStatus = :returnStatus"),
+    @NamedQuery(name = "ReturnProduct.findByCustomerName", query = "SELECT r FROM ReturnProduct r WHERE r.customerName = :customerName"),
+    @NamedQuery(name = "ReturnProduct.findByInvoiceID", query = "SELECT r FROM ReturnProduct r WHERE r.invoiceID = :invoiceID")})
 public class ReturnProduct implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ReturnProduct_ID")
     private Integer returnProductID;
-    @Column(name = "CustomerName")
-    private Integer customerName;
     @Size(max = 250)
     @Column(name = "CustomerEmail")
     private String customerEmail;
@@ -62,6 +61,11 @@ public class ReturnProduct implements Serializable {
     @Size(max = 250)
     @Column(name = "ReturnStatus")
     private String returnStatus;
+    @Size(max = 250)
+    @Column(name = "CustomerName")
+    private String customerName;
+    @Column(name = "InvoiceID")
+    private Integer invoiceID;
 
     public ReturnProduct() {
     }
@@ -76,14 +80,6 @@ public class ReturnProduct implements Serializable {
 
     public void setReturnProductID(Integer returnProductID) {
         this.returnProductID = returnProductID;
-    }
-
-    public Integer getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(Integer customerName) {
-        this.customerName = customerName;
     }
 
     public String getCustomerEmail() {
@@ -124,6 +120,22 @@ public class ReturnProduct implements Serializable {
 
     public void setReturnStatus(String returnStatus) {
         this.returnStatus = returnStatus;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public Integer getInvoiceID() {
+        return invoiceID;
+    }
+
+    public void setInvoiceID(Integer invoiceID) {
+        this.invoiceID = invoiceID;
     }
 
     @Override

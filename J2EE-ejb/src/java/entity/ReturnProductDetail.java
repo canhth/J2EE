@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,11 +32,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReturnProductDetail.findByReturnProductDetailID", query = "SELECT r FROM ReturnProductDetail r WHERE r.returnProductDetailID = :returnProductDetailID"),
     @NamedQuery(name = "ReturnProductDetail.findByReturnProductID", query = "SELECT r FROM ReturnProductDetail r WHERE r.returnProductID = :returnProductID"),
     @NamedQuery(name = "ReturnProductDetail.findByProductID", query = "SELECT r FROM ReturnProductDetail r WHERE r.productID = :productID"),
-    @NamedQuery(name = "ReturnProductDetail.findByQuantity", query = "SELECT r FROM ReturnProductDetail r WHERE r.quantity = :quantity")})
+    @NamedQuery(name = "ReturnProductDetail.findByQuantity", query = "SELECT r FROM ReturnProductDetail r WHERE r.quantity = :quantity"),
+    @NamedQuery(name = "ReturnProductDetail.findByStatus", query = "SELECT r FROM ReturnProductDetail r WHERE r.status = :status")})
 public class ReturnProductDetail implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ReturnProductDetail_ID")
     private Integer returnProductDetailID;
     @Column(name = "ReturnProduct_ID")
@@ -44,6 +46,9 @@ public class ReturnProductDetail implements Serializable {
     private Integer productID;
     @Column(name = "Quantity")
     private Integer quantity;
+    @Size(max = 250)
+    @Column(name = "Status")
+    private String status;
 
     public ReturnProductDetail() {
     }
@@ -82,6 +87,14 @@ public class ReturnProductDetail implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
